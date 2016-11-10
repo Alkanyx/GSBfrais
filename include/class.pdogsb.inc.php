@@ -335,6 +335,32 @@ class PdoGsb {
 		}
 		return $lesMois;
 	}
+	
+	/**
+	 * Retourne les mois pour lesquels il y a des fdf d'entrées
+	 *
+	 * @return un tableau associatif de clÃ© un mois -aaaamm- et de valeurs l'annÃ©e et le mois correspondant
+	 *
+	 */
+	public function getMoisDisponibles() {
+		$req = "select fichefrais.mois as mois from  fichefrais order by fichefrais.mois desc ";
+		$res = PdoGsb::$monPdo->query ( $req );
+		$lesMois = array ();
+		$laLigne = $res->fetch ();
+		while ( $laLigne != null ) {
+			$mois = $laLigne ['mois'];
+			$numAnnee = substr ( $mois, 0, 4 );
+			$numMois = substr ( $mois, 4, 2 );
+			$lesMois ["$mois"] = array (
+					"mois" => "$mois",
+					"numAnnee" => "$numAnnee",
+					"numMois" => "$numMois"
+			);
+			$laLigne = $res->fetch ();
+		}
+		return $lesMois;
+	}
+	
 	/**
 	 * Retourne les informations d'une fiche de frais d'un visiteur pour un mois donné
 	 *
