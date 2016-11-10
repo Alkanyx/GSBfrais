@@ -160,6 +160,13 @@ class PdoGsb {
 		$lesLignes = $res->fetchAll ();
 		return $lesLignes;
 	}
+	
+	public function getMaxIdHorsForfait() {
+		$req = "select MAX(lignefraishorsforfait.id) from lignefraishorsforfait";
+		$res = PdoGsb::$monPdo->query ( $req );
+		$idMax = $res->fetch();
+		return $idMax;
+	}
 	/**
 	 * Met à jour la table ligneFraisForfait
 	 *
@@ -282,11 +289,13 @@ class PdoGsb {
 	 *        	le montant
 	 *        	
 	 */
-	public function creeNouveauFraisHorsForfait($idVisiteur, $mois, $libelle, $date, $montant) {
+	public function creeNouveauFraisHorsForfait($id,$idVisiteur, $mois, $libelle, $date, $montant) {
 		$dateFr = dateFrancaisVersAnglais ( $date );
 		$req = "insert into lignefraishorsforfait 
-		values('','$idVisiteur','$mois','$libelle','$dateFr','$montant')";
+		values('$id','$idVisiteur','$mois','$libelle','$dateFr','$montant')";
+		var_dump($req);
 		PdoGsb::$monPdo->exec ( $req );
+		
 	}
 	/**
 	 * Supprime le frais hors forfait dont l'id est passé en argument
