@@ -9,13 +9,10 @@ switch ($action) {
 	case 'selectionnerMois' :
 		{
 			$lesMois = $pdo->getLesMoisDisponibles ( $idVisiteur );
-			// Afin de sélectionner par défaut le dernier mois dans la zone de liste
-			// on demande toutes les clés, et on prend la première,
-			// les mois étant triés décroissants
-			if (empty ( $lesMois )) {
-				$lesMois = $pdo->getMoisDisponibles ();
-				$lesCles = array_keys ( $lesMois );
-			}
+			// Afin de sÃ©lectionner par dÃ©faut le dernier mois dans la zone de liste
+			// on demande toutes les clÃ©s, et on prend la premiÃ¨re,
+			// les mois Ã©tant triÃ©s dÃ©croissants
+			$lesCles = array_keys( $lesMois );
 			$moisASelectionner = $lesCles [0];
 			include ("vues/v_listeMois.php");
 			break;
@@ -42,9 +39,9 @@ switch ($action) {
 	case 'moisComptable' :
 		{
 			$lesMois = $pdo->getLesMoisDisponibles ( $idVisiteur );
-			// Afin de sélectionner par défaut le dernier mois dans la zone de liste
-			// on demande toutes les clés, et on prend la première,
-			// les mois étant triés décroissants
+			// Afin de sÃ©lectionner par dÃ©faut le dernier mois dans la zone de liste
+			// on demande toutes les clÃ©s, et on prend la premiÃ¨re,
+			// les mois Ã©tant triÃ©s dÃ©croissants
 			if (empty ( $lesMois )) {
 				$lesMois = $pdo->getMoisDisponibles ();
 				$lesCles = array_keys ( $lesMois );
