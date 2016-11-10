@@ -167,6 +167,7 @@ class PdoGsb {
 		$idMax = $res->fetch();
 		return $idMax;
 	}
+	
 	/**
 	 * Met � jour la table ligneFraisForfait
 	 *
@@ -337,9 +338,9 @@ class PdoGsb {
 	}
 	
 	/**
-	 * Retourne les mois pour lesquels il y a des fdf d'entr�es
+	 * Retourne les mois pour lesquels il y a des fdf d'entrées
 	 *
-	 * @return un tableau associatif de clé un mois -aaaamm- et de valeurs l'année et le mois correspondant
+	 * @return un tableau associatif de clÃ© un mois -aaaamm- et de valeurs l'annÃ©e et le mois correspondant
 	 *
 	 */
 	public function getMoisDisponibles() {

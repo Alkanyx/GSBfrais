@@ -30,12 +30,13 @@ switch($action){
 		$dateFrais = $_REQUEST['dateFrais'];
 		$libelle = $_REQUEST['libelle'];
 		$montant = $_REQUEST['montant'];
+		$id=$pdo->getMaxIdHorsForfait()[0]+1;
 		valideInfosFrais($dateFrais,$libelle,$montant);
 		if (nbErreurs() != 0 ){
 			include("vues/v_erreurs.php");
 		}
 		else{
-			$pdo->creeNouveauFraisHorsForfait($idVisiteur,$mois,$libelle,$dateFrais,$montant);
+			$pdo->creeNouveauFraisHorsForfait($id,$idVisiteur,$mois,$libelle,$dateFrais,$montant);
 		}
 		break;
 	}
