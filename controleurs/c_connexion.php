@@ -26,12 +26,12 @@ switch ($action) {
 				connecter ( $id, $nom, $prenom );
 				include ("vues/v_sommaire.php");
 			} elseif (is_array ( $comptable )) {
-				$id = $comptable ['id'];
+				$id ='comptable';
 				$nom = $comptable ['login'];
 				$prenom = $comptable [2];
 				connecter ( $id, $nom, $prenom );	
 
-				include ("vues/v_sommaire.php");
+				include ("vues/v_sommaireComptable.php");
 			}
 			break;
 		}
