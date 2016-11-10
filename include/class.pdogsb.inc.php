@@ -61,7 +61,6 @@ class PdoGsb{
 				'mdp'=>$mdp
 		));
 		$ligne=$res->fetch();
-		var_dump($ligne);
 		return $ligne;
 	}
 
