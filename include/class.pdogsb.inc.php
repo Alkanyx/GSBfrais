@@ -159,8 +159,13 @@ class PdoGsb {
 		$res = PdoGsb::$monPdo->query ( $req );
 		$lesLignes = $res->fetchAll ();
 		return $lesLignes;
-	}
+	}	
 	
+	/**
+	 * Retourne l'id max de la table lignefraishorsforfait
+	 * 
+	 * @return un int
+	 */
 	public function getMaxIdHorsForfait() {
 		$req = "select MAX(lignefraishorsforfait.id) from lignefraishorsforfait";
 		$res = PdoGsb::$monPdo->query ( $req );
