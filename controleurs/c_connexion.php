@@ -7,6 +7,7 @@ switch ($action) {
 	case 'demandeConnexion' :
 		{
 			include ("vues/v_connexion.php");
+
 			break;
 		}
 	case 'valideConnexion' :
