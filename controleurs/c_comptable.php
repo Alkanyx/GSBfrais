@@ -9,8 +9,9 @@ $mois = getMois(date("d/m/Y"));
 $numAnnee =substr( $mois,0,4);
 $numMois =substr( $mois,4,2);
 $action = $_REQUEST['action'];
-$mois='07';
+$mois='11';
 $libelleMois=getLibelleMoisActuel($mois);
+echo $libelleMois;
 $lesFraisHorsForfait = $pdo->getLesFraisHorsForfaitMois($mois);
 switch($action){
 	case 'saisirFrais':{
@@ -50,6 +51,7 @@ switch($action){
 		break;
 	}
 	case 'listeFraisComptable':{
+		$lesVisiteurs=$pdo->getListeFraisVisiteur($mois);
 		include('vues/v_listeFraisMoisPrec.php');
 		break;
 	}

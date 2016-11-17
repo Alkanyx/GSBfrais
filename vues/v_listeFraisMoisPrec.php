@@ -1,4 +1,12 @@
 <div id="contenu">
+	<select name="selectVisiteur">
+		<?php
+		foreach ( $lesVisiteurs as $unVisiteur ) {
+			echo '
+			<option value=' . $unVisiteur ['id'] . '>' . $unVisiteur ['nom'] . ' ' . $unVisiteur ['prenom'] . '</option>';
+		}
+		?>
+	</select>
 	<table class="listeLegere">
 		<caption>Descriptif des éléments Hors Forfait du mois de <?php echo $libelleMois ?></caption>
 		<tr>

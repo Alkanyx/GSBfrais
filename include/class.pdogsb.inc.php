@@ -422,5 +422,19 @@ class PdoGsb {
 		where fichefrais.idvisiteur ='$idVisiteur' and fichefrais.mois = '$mois'";
 		PdoGsb::$monPdo->exec ( $req );
 	}
+	
+	/**
+	 * Retourne la liste des visiteurs avec une fdf en cl
+	 
+	 * @param $mois sous
+	 *        	la forme mm
+	 */
+	public function getListeFraisVisiteur($mois) {
+		$req = "SELECT * FROM fichefrais f INNER JOIN visiteur v ON v.id=f.idVisiteur WHERE idEtat='CL' AND SUBSTR(mois,5)=$mois";
+		$res=PdoGsb::$monPdo->query($req);
+		var_dump($res);
+		$lesLignes=$res->fetchAll();
+		return $lesLignes;
+	}
 }
 ?>
