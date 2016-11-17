@@ -11,7 +11,6 @@ $numMois =substr( $mois,4,2);
 $action = $_REQUEST['action'];
 $mois='11';
 $libelleMois=getLibelleMoisActuel($mois);
-echo $libelleMois;
 $lesFraisHorsForfait = $pdo->getLesFraisHorsForfaitMois($mois);
 switch($action){
 	case 'saisirFrais':{
