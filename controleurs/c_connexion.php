@@ -38,7 +38,13 @@ switch ($action) {
 		}
 		case 'valideConnexion' :
 			{
-				echo hash('md5', );
+				$login = $_REQUEST ['login'];
+				$mdp = $_REQUEST ['mdp'];
+				$visiteur = $pdo->getInfosVisiteur ( $login, $mdp );
+				$id = $visiteur ['id'];
+				$nom = $visiteur ['nom'];
+				echo $id;
+				//echo hash('md5', );
 				break;
 			}
 		
