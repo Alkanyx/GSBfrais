@@ -10,6 +10,7 @@ switch ($action) {
 
 			break;
 		}
+		
 	case 'valideConnexion' :
 		{
 			$login = $_REQUEST ['login'];
