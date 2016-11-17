@@ -52,6 +52,17 @@ function dateAnglaisVersFrancais($maDate){
    $date="$jour"."/".$mois."/".$annee;
    return $date;
 }
+
+/**
+ * Recupère le mois de la date du système
+
+ * @return la mois au format mm
+ */
+function getMois(){
+	
+	return $date;
+}
+
 /**
  * retourne le mois au format aaaamm selon le jour dans le mois
  

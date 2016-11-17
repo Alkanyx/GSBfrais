@@ -111,6 +111,34 @@ class PdoGsb {
 		}
 		return $lesLignes;
 	}
+	
+	/**
+	 * Retourne sous forme d'un tableau associatif toutes les lignes de frais hors forfait
+	 *
+	 * La boucle foreach ne peut �tre utilis�e ici car on proc�de
+	 * � une modification de la structure it�r�e - transformation du champ date-
+	 *
+	 * @param
+	 *        	$idVisiteur
+	 * @param $mois sous
+	 *        	la forme aaaamm
+	 * @return tous les champs des lignes de frais hors forfait sous la forme d'un tableau associatif
+	 *
+	 */
+	public function getLesFraisHorsForfaitMois($mois) {
+		$req = "select * from lignefraishorsforfait where month(date) ='$mois'";
+		$res = PdoGsb::$monPdo->query ( $req );
+		$lesLignes = $res->fetchAll ();
+		$nbLignes = count ( $lesLignes );
+		for($i = 0; $i < $nbLignes; $i ++) {
+			$date = $lesLignes [$i] ['date'];
+			$lesLignes [$i] ['date'] = dateAnglaisVersFrancais ( $date );
+		}
+		return $lesLignes;
+	}
+	
+	
+	
 	/**
 	 * Retourne le nombre de justificatif d'un visiteur pour un mois donn�
 	 *
