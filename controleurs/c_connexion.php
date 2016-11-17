@@ -36,6 +36,12 @@ switch ($action) {
 			}
 			break;
 		}
+		case 'valideConnexion' :
+			{
+				echo hash('md5', );
+				break;
+			}
+		
 	default :
 		{
 			include ("vues/v_connexion.php");
