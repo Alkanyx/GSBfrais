@@ -5,6 +5,7 @@
 			echo '
 			<option value=' . $unVisiteur ['id'] . '>' . $unVisiteur ['nom'] . ' ' . $unVisiteur ['prenom'] . '</option>';
 		}
+		
 		?>
 	</select>
 	<table class="listeLegere">
