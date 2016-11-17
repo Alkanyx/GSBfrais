@@ -58,9 +58,22 @@ function dateAnglaisVersFrancais($maDate){
 
  * @return la mois au format mm
  */
-function getMois(){
-	
-	return $date;
+function getMoisActuel(){
+	$date=getdate();
+	$mois=$date['mon'];
+	return $mois;
+}
+
+
+/**
+ * Recupère le libelle mois de la date du système
+
+ * @return la mois au format mm
+ */
+function getLibelleMoisActuel(){
+	$date=getdate();
+	$mois=$date['mon'];
+	return $mois;
 }
 
 /**

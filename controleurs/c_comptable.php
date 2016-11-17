@@ -11,7 +11,8 @@ $numMois =substr( $mois,4,2);
 $action = $_REQUEST['action'];
 $lesFraisHorsForfait = $pdo->getLesFraisHorsForfait($idVisiteur,$mois);
 $lesFraisForfait= $pdo->getLesFraisForfait($idVisiteur,$mois);
-echo $action;
+$mois=getMoisActuel();
+echo $mois;
 switch($action){
 	case 'saisirFrais':{
 		if($pdo->estPremierFraisMois($idVisiteur,$mois)){
