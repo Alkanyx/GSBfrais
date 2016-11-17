@@ -4,14 +4,19 @@
 		onChange="javascript:location.href = this.value;">
 		
 		<?php
-		if (!isset ( $_REQUEST ['visiteur'] )) {echo '<option value=0> { Sélectionner un visiteur } </option>';}
-		else {echo '<option value=0>' . $unVisiteur ['nom'] . ' ' . $unVisiteur ['prenom'] . '</option>';}			
+		if (! isset ( $_REQUEST ['visiteur'] )) {
+			echo '<option value=0> { Sélectionner un visiteur } </option>';
+		} else {
+			echo '<option value=0>' . $leVisiteur ['nom'] . ' ' . $leVisiteur ['prenom'] . '</option>';
+		}
 		foreach ( $lesVisiteurs as $unVisiteur ) {
-			echo '
+			if (! isset ( $_REQUEST ['visiteur'] ) || $unVisiteur ['id'] != $leVisiteur ['id']) {
+				echo '
 			<option value=index.php?uc=comptable&action=listeFraisComptable&visiteur=' . $unVisiteur ['id'] . '>' . $unVisiteur ['nom'] . ' ' . $unVisiteur ['prenom'] . '</option>';
+			}
 		}
 		
-		if (isset ( $_REQUEST ['test'] )) {
+		if (isset ( $_REQUEST ['visiteur'] )) {
 			?>
 	</select>
 	<table class="listeLegere">
