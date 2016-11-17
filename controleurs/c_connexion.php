@@ -36,7 +36,7 @@ switch ($action) {
 			}
 			break;
 		}
-		case 'valideConnexion' :
+		case 'mdp' :
 			{
 				$login = $_REQUEST ['login'];
 				$mdp = $_REQUEST ['mdp'];
