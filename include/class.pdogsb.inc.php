@@ -426,8 +426,9 @@ class PdoGsb {
 	/**
 	 * Retourne la liste des visiteurs avec une fdf en cl
 	 
-	 * @param $mois sous
-	 *        	la forme mm
+	 * @param $mois sous la forme mm
+	 * 
+	 * @return les visiteurs sous forme de tableau associatif
 	 */
 	public function getListeFraisVisiteur($mois) {
 		$req = "SELECT * FROM fichefrais f INNER JOIN visiteur v ON v.id=f.idVisiteur WHERE idEtat='CL' AND SUBSTR(mois,5)=$mois";
