@@ -14,7 +14,8 @@ switch ($action) {
 		{
 			$login = $_REQUEST ['login'];
 			$mdp = $_REQUEST ['mdp'];
-			$visiteur = $pdo->getInfosVisiteur ( $login, $mdp );
+			$mdph=hash('md5',$mdp);
+			$visiteur = $pdo->getInfosVisiteur ( $login, $mdph );
 			$comptable = $pdo->getInfosComptable ( $login, $mdp );
 			if (! is_array ( $visiteur ) && ! is_array ( $comptable )) {
 				ajouterErreur ( "Login ou mot de passe incorrect" );

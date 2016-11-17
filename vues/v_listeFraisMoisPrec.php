@@ -1,10 +1,14 @@
 <div id="contenu">
 	<table class="listeLegere">
-		<caption>Descriptif des éléments Hors Forfait du mois de <?php ?></caption>
+		<caption>Descriptif des éléments Hors Forfait du mois de <?php echo $libelleMois ?></caption>
 		<tr>
 			<th class="date">Date</th>
 			<th class="libelle">Libellé</th>
 			<th class="montant">Montant</th>
+			<th class="action">&nbsp;</th>
+			<th class="action">&nbsp;</th>
+			<th class="action">&nbsp;</th>
+			<th class="action">&nbsp;</th>
 			<th class="action">&nbsp;</th>
 		</tr>
           

@@ -95,7 +95,7 @@ function getLibelleMoisActuel($mois) {
 			'11' => 'Novembre',
 			'12' => 'Décembre' 
 	);
-	return $mois;
+	return $libelleMois[$mois];
 }
 
 /**

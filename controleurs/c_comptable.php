@@ -9,10 +9,9 @@ $mois = getMois(date("d/m/Y"));
 $numAnnee =substr( $mois,0,4);
 $numMois =substr( $mois,4,2);
 $action = $_REQUEST['action'];
-$lesFraisHorsForfait = $pdo->getLesFraisHorsForfait($idVisiteur,$mois);
-$lesFraisForfait= $pdo->getLesFraisForfait($idVisiteur,$mois);
-$mois=getMoisActuel();
-echo $mois;
+$mois='07';
+$libelleMois=getLibelleMoisActuel($mois);
+$lesFraisHorsForfait = $pdo->getLesFraisHorsForfaitMois($mois);
 switch($action){
 	case 'saisirFrais':{
 		if($pdo->estPremierFraisMois($idVisiteur,$mois)){
