@@ -89,8 +89,8 @@ class PdoGsb {
 	 * Retourne sous forme d'un tableau associatif toutes les lignes de frais hors forfait
 	 * concern�es par les deux arguments
 	 *
-	 * La boucle foreach ne peut �tre utilis�e ici car on proc�de
-	 * � une modification de la structure it�r�e - transformation du champ date-
+	 * La boucle foreach ne peut être utilis�e ici car on procède
+	 * à une modification de la structure itérée - transformation du champ date-
 	 *
 	 * @param
 	 *        	$idVisiteur
