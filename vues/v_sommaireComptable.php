@@ -13,13 +13,13 @@
 				  <div id="nomC"><?php echo $_SESSION['prenom']."  ".$_SESSION['nom']  ?></div>
 			</li>
            <li class="smenu">
-              <a href="index.php?uc=gererFrais&action=saisirFrais" title="Saisie fiche de frais ">Saisie fiche de frais</a>
+              <a href="index.php?uc=comptable&action=listeFraisComptable" title="Saisie fiche de frais ">FDF non validées</a>
            </li>
            <li class="smenu">
-              <a href="index.php?uc=etatFrais&action=moisComptable" title="Consultation de mes fiches de frais">Consultation fiches de frais</a>
+              <a href="index.php?uc=comptable&action=moisComptable" title="Consultation de mes fiches de frais">Consultation fiches de frais</a>
            </li>
  	   <li class="smenu">
-              <a href="index.php?uc=connexion&action=deconnexion" title="Se déconnecter">Déconnexion</a>
+              <a href="index.php?uc=comptable&action=deconnexion" title="Se dÃ©connecter">DÃ©connexion</a>
            </li>
          </ul>
         
