@@ -1,25 +1,14 @@
 
-<script type="text/javascript">
-
-var idVis=0;
-function chgpage(id)
-{
-idVis=document.getElementById(id);
-if (idVis.selectedIndex != 0)
-{
-location.href = "location:index.php?uc=comptable&action=listeFraisComptable&visiteur="+idVis.options[idVis.selectedIndex].value;
-}
-}
-</script>
-
-
 <div id="contenu">
-	<select name="selectVisiteur"
-		onChange="chgpage('selectVisiteur')">
+	<select name="select" id="selectVisiteur"
+		onChange="javascript:location.href = this.value;">
+		
 		<?php
+		if (!isset ( $_REQUEST ['visiteur'] )) {echo '<option value=0> { Sélectionner un visiteur } </option>';}
+		else {echo '<option value=0>' . $unVisiteur ['nom'] . ' ' . $unVisiteur ['prenom'] . '</option>';}			
 		foreach ( $lesVisiteurs as $unVisiteur ) {
 			echo '
-			<option value=' . $unVisiteur ['id'] . '>' . $unVisiteur ['nom'] . ' ' . $unVisiteur ['prenom'] . '</option>';
+			<option value=index.php?uc=comptable&action=listeFraisComptable&visiteur=' . $unVisiteur ['id'] . '>' . $unVisiteur ['nom'] . ' ' . $unVisiteur ['prenom'] . '</option>';
 		}
 		
 		if (isset ( $_REQUEST ['test'] )) {

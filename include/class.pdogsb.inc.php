@@ -66,6 +66,27 @@ class PdoGsb {
 		return $ligne;
 	}
 	
+	
+	/**
+	 * Retourne les informations d'un visiteur
+	 *
+	 * @param
+	 *        	$login
+	 * @param
+	 *        	$mdp
+	 * @return l'id, le nom et le pr�nom sous la forme d'un tableau associatif
+	 *
+	 */
+	public function getInfosVisiteurComptable($id) {
+		$res = PdoGsb::$monPdo->prepare ( "select visiteur.id as id, visiteur.nom as nom, visiteur.prenom as prenom from visiteur
+		where visiteur.id=:id" );
+		$res->execute ( array (
+				'id' => $id
+		) );
+		$ligne = $res->fetch ();
+		return $ligne;
+	}
+	
 	/**
 	 * Retourne les informations d'un comptable
 	 *

@@ -50,6 +50,8 @@ switch($action){
 		break;
 	}
 	case 'listeFraisComptable':{
+		if(isset($_REQUEST['visiteur']))
+			$leVisiteur=$pdo->getInfosVisiteurComptable($_REQUEST['visiteur']);
 		$lesVisiteurs=$pdo->getListeFraisVisiteur($mois);
 		include('vues/v_listeFraisMoisPrec.php');
 		break;
