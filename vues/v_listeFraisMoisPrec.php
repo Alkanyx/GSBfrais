@@ -1,12 +1,29 @@
+
+<script type="text/javascript">
+
+var idVis=0;
+function chgpage(id)
+{
+idVis=document.getElementById(id);
+if (idVis.selectedIndex != 0)
+{
+location.href = "location:index.php?uc=comptable&action=listeFraisComptable&visiteur="+idVis.options[idVis.selectedIndex].value;
+}
+}
+</script>
+
+
 <div id="contenu">
-	<select name="selectVisiteur">
+	<select name="selectVisiteur"
+		onChange="chgpage('selectVisiteur')">
 		<?php
 		foreach ( $lesVisiteurs as $unVisiteur ) {
 			echo '
 			<option value=' . $unVisiteur ['id'] . '>' . $unVisiteur ['nom'] . ' ' . $unVisiteur ['prenom'] . '</option>';
 		}
 		
-		?>
+		if (isset ( $_REQUEST ['test'] )) {
+			?>
 	</select>
 	<table class="listeLegere">
 		<caption>Descriptif des éléments Hors Forfait du mois de <?php echo $libelleMois ?></caption>
@@ -22,12 +39,12 @@
 		</tr>
           
     <?php
-				foreach ( $lesFraisHorsForfait as $unFraisHorsForfait ) {
-					$libelle = $unFraisHorsForfait ['libelle'];
-					$date = $unFraisHorsForfait ['date'];
-					$montant = $unFraisHorsForfait ['montant'];
-					$id = $unFraisHorsForfait ['id'];
-					?>		
+			foreach ( $lesFraisHorsForfait as $unFraisHorsForfait ) {
+				$libelle = $unFraisHorsForfait ['libelle'];
+				$date = $unFraisHorsForfait ['date'];
+				$montant = $unFraisHorsForfait ['montant'];
+				$id = $unFraisHorsForfait ['id'];
+				?>		
             <tr>
 			<td> <?php echo $date ?></td>
 			<td><?php echo $libelle ?></td>
@@ -38,8 +55,9 @@
 					ce frais</a></td>
 		</tr>
 	<?php
-				}
-				?>	  
+			}
+		}
+		?>	  
                                           
     </table>
 
