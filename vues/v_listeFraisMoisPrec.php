@@ -29,7 +29,7 @@
 			<th class="action">Modifier</th>
 			<th class="action">Valider</th>
 			<th class="action">Refuser</th>
-			<th class="action">Retarder</th>
+			<th class="action">Reporter</th>
 		</tr>
           
     <?php

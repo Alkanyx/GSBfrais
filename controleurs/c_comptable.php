@@ -4,58 +4,65 @@ if ($_SESSION ['idVisiteur'] == 'comptable')
 	include ("vues/v_sommaireComptable.php");
 else
 	include ("vues/v_sommaire.php");
-$idVisiteur = $_SESSION['idVisiteur'];
-$mois = getMois(date("d/m/Y"));
-$numAnnee =substr( $mois,0,4);
-$numMois =substr( $mois,4,2);
-$action = $_REQUEST['action'];
-$mois='11';
-$libelleMois=getLibelleMoisActuel($mois);
-$lesFraisHorsForfait = $pdo->getLesFraisHorsForfaitMois($mois);
-switch($action){
-	case 'saisirFrais':{
-		if($pdo->estPremierFraisMois($idVisiteur,$mois)){
-			$pdo->creeNouvellesLignesFrais($idVisiteur,$mois);
+$idVisiteur = $_SESSION ['idVisiteur'];
+$mois = getMois ( date ( "d/m/Y" ) );
+$numAnnee = substr ( $mois, 0, 4 );
+$numMois = substr ( $mois, 4, 2 );
+$action = $_REQUEST ['action'];
+$mois = '11';
+$libelleMois = getLibelleMoisActuel ( $mois );
+
+$moisA =date("Y"). $mois ;
+switch ($action) {
+	case 'saisirFrais' :
+		{
+			if ($pdo->estPremierFraisMois ( $idVisiteur, $mois )) {
+				$pdo->creeNouvellesLignesFrais ( $idVisiteur, $mois );
+			}
+			break;
 		}
-		break;
-	}
-	case 'validerMajFraisForfait':{
-		$lesFrais = $_REQUEST['lesFrais'];
-		if(lesQteFraisValides($lesFrais)){
-	  	 	$pdo->majFraisForfait($idVisiteur,$mois,$lesFrais);
+	case 'validerMajFraisForfait' :
+		{
+			$lesFrais = $_REQUEST ['lesFrais'];
+			if (lesQteFraisValides ( $lesFrais )) {
+				$pdo->majFraisForfait ( $idVisiteur, $mois, $lesFrais );
+			} else {
+				ajouterErreur ( "Les valeurs des frais doivent être numériques" );
+				include ("vues/v_erreurs.php");
+			}
+			break;
 		}
-		else{
-			ajouterErreur("Les valeurs des frais doivent être numériques");
-			include("vues/v_erreurs.php");
+	case 'validerCreationFrais' :
+		{
+			$dateFrais = $_REQUEST ['dateFrais'];
+			$libelle = $_REQUEST ['libelle'];
+			$montant = $_REQUEST ['montant'];
+			$id = $pdo->getMaxIdHorsForfait () [0] + 1;
+			valideInfosFrais ( $dateFrais, $libelle, $montant );
+			if (nbErreurs () != 0) {
+				include ("vues/v_erreurs.php");
+			} else {
+				$pdo->creeNouveauFraisHorsForfait ( $id, $idVisiteur, $mois, $libelle, $dateFrais, $montant );
+			}
+			break;
 		}
-	  break;
-	}
-	case 'validerCreationFrais':{
-		$dateFrais = $_REQUEST['dateFrais'];
-		$libelle = $_REQUEST['libelle'];
-		$montant = $_REQUEST['montant'];
-		$id=$pdo->getMaxIdHorsForfait()[0]+1;
-		valideInfosFrais($dateFrais,$libelle,$montant);
-		if (nbErreurs() != 0 ){
-			include("vues/v_erreurs.php");
+	case 'supprimerFrais' :
+		{
+			$idFrais = $_REQUEST ['idFrais'];
+			$pdo->supprimerFraisHorsForfait ( $idFrais );
+			break;
 		}
-		else{
-			$pdo->creeNouveauFraisHorsForfait($id,$idVisiteur,$mois,$libelle,$dateFrais,$montant);
+	case 'listeFraisComptable' :
+		{
+			if (isset ( $_REQUEST ['visiteur'] )) {
+				$leVisiteur = $pdo->getInfosVisiteurComptable ( $_REQUEST ['visiteur'] );
+				$lesFraisHorsForfait=$pdo -> getLesFraisHorsForfait($_REQUEST['visiteur'],$moisA);
+
+				var_dump($moisA);
+			}
+			$lesVisiteurs = $pdo->getListeFraisVisiteur ( $mois );
+			include ('vues/v_listeFraisMoisPrec.php');
+			break;
 		}
-		break;
-	}
-	case 'supprimerFrais':{
-		$idFrais = $_REQUEST['idFrais'];
-	    $pdo->supprimerFraisHorsForfait($idFrais);
-		break;
-	}
-	case 'listeFraisComptable':{
-		if(isset($_REQUEST['visiteur']))
-			$leVisiteur=$pdo->getInfosVisiteurComptable($_REQUEST['visiteur']);
-		
-		$lesVisiteurs=$pdo->getListeFraisVisiteur($mois);
-		include('vues/v_listeFraisMoisPrec.php');
-		break;
-	}
 }
 ?>
