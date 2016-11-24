@@ -25,11 +25,11 @@
 			<th class="date">Date</th>
 			<th class="libelle">Libellé</th>
 			<th class="montant">Montant</th>
-			<th class="action">&nbsp;</th>
-			<th class="action">&nbsp;</th>
-			<th class="action">&nbsp;</th>
-			<th class="action">&nbsp;</th>
-			<th class="action">&nbsp;</th>
+			<th class="action">Etat</th>
+			<th class="action">Modifier</th>
+			<th class="action">Valider</th>
+			<th class="action">Refuser</th>
+			<th class="action">Retarder</th>
 		</tr>
           
     <?php
