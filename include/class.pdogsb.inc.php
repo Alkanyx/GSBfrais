@@ -125,7 +125,8 @@ class PdoGsb {
 		INNER JOIN fichefrais f ON lignefraishorsforfait.idVisiteur=f.idVisiteur 
 		INNER JOIN etat ON f.idEtat=etat.id
 		where lignefraishorsforfait.idvisiteur ='$idVisiteur' 
-		and f.mois = '$mois' ";
+		and f.mois = '$mois'
+		and lignefraishorsforfait.mois='$mois' ";
 		$res = PdoGsb::$monPdo->query ( $req );
 		$lesLignes = $res->fetchAll ();
 		$nbLignes = count ( $lesLignes );
