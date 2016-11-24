@@ -50,9 +50,35 @@ switch ($action) {
 			$idFrais = $_REQUEST ['idFrais'];
 			$moisFrais = $_REQUEST ['mois'];
 			$visiteur = $_REQUEST ['visiteur'];
-			$pdo->refuserFrais ( $visiteur, $moisFrais, $idFrais );
+			$test = $pdo->refuserFrais ( $visiteur, $moisFrais, $idFrais );
+			if (! $test) {
+				$erreur = 'Erreur lors de la refusation mdr';
+			}
+			$leVisiteur = $pdo->getInfosVisiteurComptable ( $_REQUEST ['visiteur'] );
+			$lesFraisHorsForfait = $pdo->getLesFraisHorsForfait ( $_REQUEST ['visiteur'], $moisA );
+			$lesFraisForfait = $pdo->getLesFraisForfait ( $_REQUEST ['visiteur'], $moisA );
+			$lesVisiteurs = $pdo->getListeFraisVisiteur ( $mois );
+			include ('vues/v_listeFraisMoisPrec.php');
 			break;
 		}
+		
+		case 'validerFrais' :
+			{
+				$idFrais = $_REQUEST ['idFrais'];
+				$moisFrais = $_REQUEST ['mois'];
+				$visiteur = $_REQUEST ['visiteur'];
+				$test = $pdo->validerFrais ( $visiteur, $moisFrais, $idFrais );
+				if (! $test) {
+					$erreur = 'Erreur lors de la validation mdr';
+				}
+				$leVisiteur = $pdo->getInfosVisiteurComptable ( $_REQUEST ['visiteur'] );
+				$lesFraisHorsForfait = $pdo->getLesFraisHorsForfait ( $_REQUEST ['visiteur'], $moisA );
+				$lesFraisForfait = $pdo->getLesFraisForfait ( $_REQUEST ['visiteur'], $moisA );
+				$lesVisiteurs = $pdo->getListeFraisVisiteur ( $mois );
+				include ('vues/v_listeFraisMoisPrec.php');
+				break;
+			}
+			
 	case 'listeFraisComptable' :
 		{
 			if (isset ( $_REQUEST ['visiteur'] )) {

@@ -125,8 +125,7 @@ class PdoGsb {
 		INNER JOIN fichefrais f ON lignefraishorsforfait.idVisiteur=f.idVisiteur 
 		INNER JOIN etat ON f.idEtat=etat.id
 		where lignefraishorsforfait.idvisiteur ='$idVisiteur' 
-		and f.mois = '$mois'
-		and lignefraishorsforfait.mois='$mois' ";
+		and f.mois = '$mois' ";
 		$res = PdoGsb::$monPdo->query ( $req );
 		$lesLignes = $res->fetchAll ();
 		$nbLignes = count ( $lesLignes );
@@ -260,12 +259,42 @@ class PdoGsb {
 	 */
 	public function refuserFrais($idVisiteur, $mois, $idFrais) {
 		$req = "SELECT libelle FROM ligneFraisHorsForfait WHERE ligneFraisHorsForfait.id='$idFrais'";
-		$res = PdoGsb::$monPdo->query($req);
-		$ligne=$res->fetch();
-		$libelle='REFUSE : '.$ligne['libelle'];
-		var_dump($libelle);
+		$res = PdoGsb::$monPdo->query ( $req );
+		$ligne = $res->fetch ();
+		$libelle = 'REFUSE : ' . $ligne ['libelle'];
+		var_dump ( $libelle );
 		$req = "UPDATE ligneFraisHorsForfait set ligneFraisHorsForfait.libelle='$libelle' WHERE lignefraishorsforfait.id='$idFrais'";
-		PdoGsb::$monPdo->exec($req);
+		PdoGsb::$monPdo->exec ( $req );
+		return PdoGsb::$monPdo->exec ( $req );
+	}
+	
+	/**
+	 * Met à jour la table ligneFraisHorsForfait
+	 *
+	 * Met à jour la table ligneFraisForfait pour un visiteur et
+	 * un mois donné en enregistrant le nouveau libelle
+	 *
+	 * @param
+	 *        	$idVisiteur
+	 * @param $mois sous
+	 *        	la forme aaaamm
+	 * @return un tableau associatif
+	 *        
+	 */
+	public function validerFrais($idVisiteur, $mois, $idFrais) {
+		$req = "SELECT libelle,montant,montantValide FROM ligneFraisHorsForfait 
+		INNER JOIN fichefrais ON lignefraishorsforfait.idVisiteur=fichefrais.idvisiteur
+		WHERE ligneFraisHorsForfait.id='$idFrais'";
+		$res = PdoGsb::$monPdo->query ( $req );
+		$ligne = $res->fetch ();
+		$montantValide = $ligne ['montantValide'] + $ligne ['montant'];
+		$libelle = 'VALIDE : ' . $ligne ['libelle'];
+		var_dump ( $libelle );
+		$req = "UPDATE ligneFraisHorsForfait set ligneFraisHorsForfait.libelle='$libelle' WHERE lignefraishorsforfait.id='$idFrais'";
+		PdoGsb::$monPdo->exec ( $req );
+		$req = "UPDATE fichefrais set fichefrais.montantvalide='$montantValide' WHERE fichefrais.idVisiteur='$idVisiteur' AND fichefrais.mois='$mois'";
+		PdoGsb::$monPdo->exec ( $req );
+		return PdoGsb::$monPdo->exec ( $req );
 	}
 	
 	/**
