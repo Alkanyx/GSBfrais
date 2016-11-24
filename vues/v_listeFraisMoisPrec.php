@@ -58,7 +58,6 @@
 				<th class="libelle">Libellé</th>
 				<th class="montant">Montant</th>
 				<th class="action">Etat</th>
-				<th class="action">Modifier</th>
 				<th class="action">Valider</th>
 				<th class="action">Refuser</th>
 				<th class="action">Reporter</th>
@@ -77,9 +76,6 @@
 				<td><?php echo $libelle ?></td>
 				<td><?php echo $montant ?></td>
 				<td><?php echo $etat ?></td>
-				<td><a
-					href="index.php?uc=gererFrais&action=supprimerFrais&idFrais=<?php echo $id ?>"
-					onclick="return confirm('Voulez-vous vraiment supprimer ce frais?');">Modifier</a></td>
 				<td><a
 					href="index.php?uc=gererFrais&action=supprimerFrais&idFrais=<?php echo $id ?>"
 					onclick="return confirm('Voulez-vous vraiment supprimer ce frais?');">Valider</a></td>
