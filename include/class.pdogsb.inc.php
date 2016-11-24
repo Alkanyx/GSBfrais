@@ -66,7 +66,6 @@ class PdoGsb {
 		return $ligne;
 	}
 	
-	
 	/**
 	 * Retourne les informations d'un visiteur
 	 *
@@ -75,13 +74,13 @@ class PdoGsb {
 	 * @param
 	 *        	$mdp
 	 * @return l'id, le nom et le pr�nom sous la forme d'un tableau associatif
-	 *
+	 *        
 	 */
 	public function getInfosVisiteurComptable($id) {
 		$res = PdoGsb::$monPdo->prepare ( "select visiteur.id as id, visiteur.nom as nom, visiteur.prenom as prenom from visiteur
 		where visiteur.id=:id" );
 		$res->execute ( array (
-				'id' => $id
+				'id' => $id 
 		) );
 		$ligne = $res->fetch ();
 		return $ligne;
@@ -121,7 +120,7 @@ class PdoGsb {
 	 *        
 	 */
 	public function getLesFraisHorsForfait($idVisiteur, $mois) {
-		$req = "select * from lignefraishorsforfait where lignefraishorsforfait.idvisiteur ='$idVisiteur' 
+		$req = "select date,montant,libelle,idEtat,id from lignefraishorsforfait INNER JOIN fichefrais f ON lignefraishorsforfait.idVisiteur=f.idVisiteur where lignefraishorsforfait.idvisiteur ='$idVisiteur' 
 		and lignefraishorsforfait.mois = '$mois' ";
 		$res = PdoGsb::$monPdo->query ( $req );
 		$lesLignes = $res->fetchAll ();
@@ -144,7 +143,7 @@ class PdoGsb {
 	 * @param $mois sous
 	 *        	la forme aaaamm
 	 * @return tous les champs des lignes de frais hors forfait sous la forme d'un tableau associatif
-	 *
+	 *        
 	 */
 	public function getLesFraisHorsForfaitMois($mois) {
 		$req = "select * from lignefraishorsforfait where month(date) ='$mois'";
@@ -152,8 +151,6 @@ class PdoGsb {
 		$lesLignes = $res->fetchAll ();
 		return $lesLignes;
 	}
-	
-	
 	
 	/**
 	 * Retourne le nombre de justificatif d'un visiteur pour un mois donn�
@@ -203,17 +200,17 @@ class PdoGsb {
 		$res = PdoGsb::$monPdo->query ( $req );
 		$lesLignes = $res->fetchAll ();
 		return $lesLignes;
-	}	
+	}
 	
 	/**
 	 * Retourne l'id max de la table lignefraishorsforfait
-	 * 
+	 *
 	 * @return un int
 	 */
 	public function getMaxIdHorsForfait() {
 		$req = "select MAX(lignefraishorsforfait.id) from lignefraishorsforfait";
 		$res = PdoGsb::$monPdo->query ( $req );
-		$idMax = $res->fetch();
+		$idMax = $res->fetch ();
 		return $idMax;
 	}
 	
@@ -339,12 +336,11 @@ class PdoGsb {
 	 *        	le montant
 	 *        	
 	 */
-	public function creeNouveauFraisHorsForfait($id,$idVisiteur, $mois, $libelle, $date, $montant) {
+	public function creeNouveauFraisHorsForfait($id, $idVisiteur, $mois, $libelle, $date, $montant) {
 		$dateFr = dateFrancaisVersAnglais ( $date );
 		$req = "insert into lignefraishorsforfait 
 		values('$id','$idVisiteur','$mois','$libelle','$dateFr','$montant')";
 		PdoGsb::$monPdo->exec ( $req );
-		
 	}
 	/**
 	 * Supprime le frais hors forfait dont l'id est pass� en argument
@@ -389,7 +385,7 @@ class PdoGsb {
 	 * Retourne les mois pour lesquels il y a des fdf d'entrées
 	 *
 	 * @return un tableau associatif de clÃ© un mois -aaaamm- et de valeurs l'annÃ©e et le mois correspondant
-	 *
+	 *        
 	 */
 	public function getMoisDisponibles() {
 		$req = "select fichefrais.mois as mois from  fichefrais order by fichefrais.mois desc ";
@@ -403,7 +399,7 @@ class PdoGsb {
 			$lesMois ["$mois"] = array (
 					"mois" => "$mois",
 					"numAnnee" => "$numAnnee",
-					"numMois" => "$numMois"
+					"numMois" => "$numMois" 
 			);
 			$laLigne = $res->fetch ();
 		}
@@ -446,15 +442,16 @@ class PdoGsb {
 	
 	/**
 	 * Retourne la liste des visiteurs avec une fdf en cl
-	 
-	 * @param $mois sous la forme mm
-	 * 
+	 *
+	 * @param $mois sous
+	 *        	la forme mm
+	 *        	
 	 * @return les visiteurs sous forme de tableau associatif
 	 */
 	public function getListeFraisVisiteur($mois) {
 		$req = "SELECT * FROM fichefrais f INNER JOIN visiteur v ON v.id=f.idVisiteur WHERE idEtat='CL' AND SUBSTR(mois,5)=$mois";
-		$res=PdoGsb::$monPdo->query($req);
-		$lesLignes=$res->fetchAll();
+		$res = PdoGsb::$monPdo->query ( $req );
+		$lesLignes = $res->fetchAll ();
 		return $lesLignes;
 	}
 }

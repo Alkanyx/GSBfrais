@@ -69,11 +69,13 @@
 					$date = $unFraisHorsForfait ['date'];
 					$montant = $unFraisHorsForfait ['montant'];
 					$id = $unFraisHorsForfait ['id'];
+					$etat = $unFraisHorsForfait ['idEtat'];
 					?>		
             <tr>
 				<td> <?php echo $date ?></td>
 				<td><?php echo $libelle ?></td>
 				<td><?php echo $montant ?></td>
+				<td><?php echo $etat ?></td>
 				<td><a
 					href="index.php?uc=gererFrais&action=supprimerFrais&idFrais=<?php echo $id ?>"
 					onclick="return confirm('Voulez-vous vraiment supprimer ce frais?');">Supprimer
