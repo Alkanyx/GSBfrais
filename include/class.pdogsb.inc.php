@@ -262,7 +262,7 @@ class PdoGsb {
 		$res = PdoGsb::$monPdo->query($req);
 		$ligne=$res->fetch();
 		$libelle='REFUSE : '.$ligne['libelle'];
-		var_dump($libelle);
+		var_dump($ligne);
 	}
 	
 	/**
