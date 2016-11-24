@@ -11,8 +11,6 @@ $numMois = substr ( $mois, 4, 2 );
 $action = $_REQUEST ['action'];
 $mois = '11';
 $libelleMois = getLibelleMoisActuel ( $mois );
-
-
 $moisA =date("Y"). $mois ;
 switch ($action) {
 	case 'saisirFrais' :
