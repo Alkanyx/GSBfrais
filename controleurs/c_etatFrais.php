@@ -35,21 +35,6 @@ switch ($action) {
 			$dateModif = dateAnglaisVersFrancais ( $dateModif );
 			include ("vues/v_etatFrais.php");
 		}
-	/*
-	case 'moisComptable' :
-		{
-			$lesMois = $pdo->getLesMoisDisponibles ( $idVisiteur );
-			// Afin de sÃ©lectionner par dÃ©faut le dernier mois dans la zone de liste
-			// on demande toutes les clÃ©s, et on prend la premiÃ¨re,
-			// les mois Ã©tant triÃ©s dÃ©croissants
-			if (!empty ( $lesMois )) {
-				$lesMois = $pdo->getMoisDisponibles ();
-				$lesCles = array_keys ( $lesMois );
-				$moisASelectionner = $lesCles[0];
-			}
-			include ("vues/v_listeMois.php");
-			break;
-		}
-		*/
+
 }
 ?>

@@ -49,7 +49,6 @@ switch ($action) {
 		{
 			$idFrais = $_REQUEST ['idFrais'];
 			$moisFrais = $_REQUEST ['mois'];
-			
 			$visiteur = $_REQUEST ['visiteur'];
 			$pdo->refuserFrais ( $visiteur, $moisFrais, $idFrais );
 			break;

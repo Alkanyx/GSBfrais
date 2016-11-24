@@ -262,7 +262,9 @@ class PdoGsb {
 		$res = PdoGsb::$monPdo->query($req);
 		$ligne=$res->fetch();
 		$libelle='REFUSE : '.$ligne['libelle'];
-		var_dump($ligne);
+		var_dump($libelle);
+		$req = "UPDATE ligneFraisHorsForfait set ligneFraisHorsForfait.libelle='$libelle' WHERE lignefraishorsforfait.id='$idFrais'";
+		PdoGsb::$monPdo->exec($req);
 	}
 	
 	/**
