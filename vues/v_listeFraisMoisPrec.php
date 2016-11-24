@@ -19,42 +19,72 @@
 		if (isset ( $_REQUEST ['visiteur'] )) {
 			?>
 	</select>
+
+	<?php 
+	if (!empty($lesFraisForfait)){?>
 	<table class="listeLegere">
-		<caption>Descriptif des éléments Hors Forfait du mois de <?php echo $libelleMois ?></caption>
+		<caption>Descriptif des éléments forfaitisés du mois de <?php echo $libelleMois ?></caption>
 		<tr>
-			<th class="date">Date</th>
-			<th class="libelle">Libellé</th>
-			<th class="montant">Montant</th>
-			<th class="action">Etat</th>
-			<th class="action">Modifier</th>
-			<th class="action">Valider</th>
-			<th class="action">Refuser</th>
-			<th class="action">Reporter</th>
+			<th>Frais Forfaitaires</th>
+			<th>Qté</th>
+			<th>Montant unitaire</th>
+			<th>Total</th>
 		</tr>
           
     <?php
-			foreach ( $lesFraisHorsForfait as $unFraisHorsForfait ) {
-				$libelle = $unFraisHorsForfait ['libelle'];
-				$date = $unFraisHorsForfait ['date'];
-				$montant = $unFraisHorsForfait ['montant'];
-				$id = $unFraisHorsForfait ['id'];
-				?>		
+				foreach ( $lesFraisForfait as $unFraisForfait ) {
+					$libelle = $unFraisForfait ['libelle'];
+					$qte = $unFraisForfait ['montant'];
+					$montant = $unFraisForfait ['quantite'];
+					$total = $qte*$montant;
+					?>		
             <tr>
-			<td> <?php echo $date ?></td>
-			<td><?php echo $libelle ?></td>
+			<td> <?php echo $libelle ?></td>
+			<td><?php echo $qte ?></td>
 			<td><?php echo $montant ?></td>
-			<td><a
-				href="index.php?uc=gererFrais&action=supprimerFrais&idFrais=<?php echo $id ?>"
-				onclick="return confirm('Voulez-vous vraiment supprimer ce frais?');">Supprimer
-					ce frais</a></td>
+			<td><?php echo $total ?></td>
+	
 		</tr>
 	<?php
+				}
+			}
+			if (! empty ( $lesFraisForfait )) {
+				?>
+	<table class="listeLegere">
+			<caption>Descriptif des éléments Forfait du mois de <?php echo $libelleMois ?></caption>
+			<tr>
+				<th class="date">Date</th>
+				<th class="libelle">Libellé</th>
+				<th class="montant">Montant</th>
+				<th class="action">Etat</th>
+				<th class="action">Modifier</th>
+				<th class="action">Valider</th>
+				<th class="action">Refuser</th>
+				<th class="action">Reporter</th>
+			</tr>
+          
+    <?php
+				foreach ( $lesFraisHorsForfait as $unFraisHorsForfait ) {
+					$libelle = $unFraisHorsForfait ['libelle'];
+					$date = $unFraisHorsForfait ['date'];
+					$montant = $unFraisHorsForfait ['montant'];
+					$id = $unFraisHorsForfait ['id'];
+					?>		
+            <tr>
+				<td> <?php echo $date ?></td>
+				<td><?php echo $libelle ?></td>
+				<td><?php echo $montant ?></td>
+				<td><a
+					href="index.php?uc=gererFrais&action=supprimerFrais&idFrais=<?php echo $id ?>"
+					onclick="return confirm('Voulez-vous vraiment supprimer ce frais?');">Supprimer
+						ce frais</a></td>
+			</tr>
+	<?php
+				}
 			}
 		}
 		?>	  
                                           
     </table>
 
-</div>
-
-
+		</div>

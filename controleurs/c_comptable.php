@@ -56,8 +56,7 @@ switch ($action) {
 			if (isset ( $_REQUEST ['visiteur'] )) {
 				$leVisiteur = $pdo->getInfosVisiteurComptable ( $_REQUEST ['visiteur'] );
 				$lesFraisHorsForfait=$pdo -> getLesFraisHorsForfait($_REQUEST['visiteur'],$moisA);
-
-				var_dump($moisA);
+				$lesFraisForfait=$pdo -> getLesFraisForfait($_REQUEST['visiteur'],$moisA);
 			}
 			$lesVisiteurs = $pdo->getListeFraisVisiteur ( $mois );
 			include ('vues/v_listeFraisMoisPrec.php');
