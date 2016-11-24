@@ -120,7 +120,11 @@ class PdoGsb {
 	 *        
 	 */
 	public function getLesFraisHorsForfait($idVisiteur, $mois) {
-		$req = "select date,montant,libelle,idEtat,id from lignefraishorsforfait INNER JOIN fichefrais f ON lignefraishorsforfait.idVisiteur=f.idVisiteur where lignefraishorsforfait.idvisiteur ='$idVisiteur' 
+		$req = "select date,montant,lignefraishorsforfait.libelle as libelle,lignefraishorsforfait.id as id,etat.libelle as libelEtat 
+		from lignefraishorsforfait 
+		INNER JOIN fichefrais f ON lignefraishorsforfait.idVisiteur=f.idVisiteur 
+		INNER JOIN etat ON f.idEtat=etat.id
+		where lignefraishorsforfait.idvisiteur ='$idVisiteur' 
 		and lignefraishorsforfait.mois = '$mois' ";
 		$res = PdoGsb::$monPdo->query ( $req );
 		$lesLignes = $res->fetchAll ();

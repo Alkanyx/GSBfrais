@@ -20,8 +20,9 @@
 			?>
 	</select>
 
-	<?php 
-	if (!empty($lesFraisForfait)){?>
+	<?php
+			if (! empty ( $lesFraisForfait )) {
+				?>
 	<table class="listeLegere">
 		<caption>Descriptif des éléments forfaitisés du mois de <?php echo $libelleMois ?></caption>
 		<tr>
@@ -36,14 +37,14 @@
 					$libelle = $unFraisForfait ['libelle'];
 					$qte = $unFraisForfait ['montant'];
 					$montant = $unFraisForfait ['quantite'];
-					$total = $qte*$montant;
+					$total = $qte * $montant;
 					?>		
             <tr>
 			<td> <?php echo $libelle ?></td>
 			<td><?php echo $qte ?></td>
 			<td><?php echo $montant ?></td>
 			<td><?php echo $total ?></td>
-	
+
 		</tr>
 	<?php
 				}
@@ -69,7 +70,7 @@
 					$date = $unFraisHorsForfait ['date'];
 					$montant = $unFraisHorsForfait ['montant'];
 					$id = $unFraisHorsForfait ['id'];
-					$etat = $unFraisHorsForfait ['idEtat'];
+					$etat = $unFraisHorsForfait ['libelEtat'];
 					?>		
             <tr>
 				<td> <?php echo $date ?></td>
@@ -78,8 +79,16 @@
 				<td><?php echo $etat ?></td>
 				<td><a
 					href="index.php?uc=gererFrais&action=supprimerFrais&idFrais=<?php echo $id ?>"
-					onclick="return confirm('Voulez-vous vraiment supprimer ce frais?');">Supprimer
-						ce frais</a></td>
+					onclick="return confirm('Voulez-vous vraiment supprimer ce frais?');">Modifier</a></td>
+				<td><a
+					href="index.php?uc=gererFrais&action=supprimerFrais&idFrais=<?php echo $id ?>"
+					onclick="return confirm('Voulez-vous vraiment supprimer ce frais?');">Valider</a></td>
+				<td><a
+					href="index.php?uc=gererFrais&action=supprimerFrais&idFrais=<?php echo $id ?>"
+					onclick="return confirm('Voulez-vous vraiment supprimer ce frais?');">Refuser</a></td>
+				<td><a
+					href="index.php?uc=gererFrais&action=supprimerFrais&idFrais=<?php echo $id ?>"
+					onclick="return confirm('Voulez-vous vraiment supprimer ce frais?');">Reporter</a></td>
 			</tr>
 	<?php
 				}
