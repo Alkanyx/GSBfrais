@@ -35,7 +35,7 @@ switch ($action) {
 			$dateModif = dateAnglaisVersFrancais ( $dateModif );
 			include ("vues/v_etatFrais.php");
 		}
-	
+	/*
 	case 'moisComptable' :
 		{
 			$lesMois = $pdo->getLesMoisDisponibles ( $idVisiteur );
@@ -50,5 +50,6 @@ switch ($action) {
 			include ("vues/v_listeMois.php");
 			break;
 		}
+		*/
 }
 ?>
