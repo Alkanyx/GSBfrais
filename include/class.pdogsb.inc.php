@@ -125,7 +125,7 @@ class PdoGsb {
 		INNER JOIN fichefrais f ON lignefraishorsforfait.idVisiteur=f.idVisiteur 
 		INNER JOIN etat ON f.idEtat=etat.id
 		where lignefraishorsforfait.idvisiteur ='$idVisiteur' 
-		and lignefraishorsforfait.mois = '$mois' ";
+		and f.mois = '$mois' ";
 		$res = PdoGsb::$monPdo->query ( $req );
 		$lesLignes = $res->fetchAll ();
 		$nbLignes = count ( $lesLignes );
@@ -243,6 +243,28 @@ class PdoGsb {
 			PdoGsb::$monPdo->exec ( $req );
 		}
 	}
+	
+	/**
+	 * Met à jour la table ligneFraisHorsForfait
+	 *
+	 * Met à jour la table ligneFraisForfait pour un visiteur et
+	 * un mois donné en enregistrant le nouveau libelle
+	 *
+	 * @param
+	 *        	$idVisiteur
+	 * @param $mois sous
+	 *        	la forme aaaamm
+	 * @return un tableau associatif
+	 *        
+	 */
+	public function refuserFrais($idVisiteur, $mois, $idFrais) {
+		$req = "SELECT libelle FROM ligneFraisHorsForfait WHERE ligneFraisHorsForfait.id='$idFrais'";
+		$res = PdoGsb::$monPdo->query($req);
+		$ligne=$res->fetch();
+		$libelle='REFUSE : '.$ligne['libelle'];
+		var_dump($libelle);
+	}
+	
 	/**
 	 * met � jour le nombre de justificatifs de la table ficheFrais
 	 * pour le mois et le visiteur concern�

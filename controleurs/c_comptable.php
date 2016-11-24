@@ -11,7 +11,7 @@ $numMois = substr ( $mois, 4, 2 );
 $action = $_REQUEST ['action'];
 $mois = '11';
 $libelleMois = getLibelleMoisActuel ( $mois );
-$moisA =date("Y"). $mois ;
+$moisA = date ( "Y" ) . $mois;
 switch ($action) {
 	case 'saisirFrais' :
 		{
@@ -45,18 +45,20 @@ switch ($action) {
 			}
 			break;
 		}
-	case 'supprimerFrais' :
+	case 'refuserFrais' :
 		{
 			$idFrais = $_REQUEST ['idFrais'];
-			$pdo->supprimerFraisHorsForfait ( $idFrais );
+			$moisFrais = $_REQUEST ['mois'];
+			$visiteur = $_REQUEST ['visiteur'];
+			$pdo->refuserFrais ( $visiteur, $moisFrais, $idFrais );
 			break;
 		}
 	case 'listeFraisComptable' :
 		{
 			if (isset ( $_REQUEST ['visiteur'] )) {
 				$leVisiteur = $pdo->getInfosVisiteurComptable ( $_REQUEST ['visiteur'] );
-				$lesFraisHorsForfait=$pdo -> getLesFraisHorsForfait($_REQUEST['visiteur'],$moisA);
-				$lesFraisForfait=$pdo -> getLesFraisForfait($_REQUEST['visiteur'],$moisA);
+				$lesFraisHorsForfait = $pdo->getLesFraisHorsForfait ( $_REQUEST ['visiteur'], $moisA );
+				$lesFraisForfait = $pdo->getLesFraisForfait ( $_REQUEST ['visiteur'], $moisA );
 			}
 			$lesVisiteurs = $pdo->getListeFraisVisiteur ( $mois );
 			include ('vues/v_listeFraisMoisPrec.php');

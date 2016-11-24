@@ -77,10 +77,10 @@
 				<td><?php echo $montant ?></td>
 				<td><?php echo $etat ?></td>
 				<td><a
-					href="index.php?uc=gererFrais&action=supprimerFrais&idFrais=<?php echo $id ?>"
+					href="index.php?uc=comptable&action=validerFrais&idFrais=<?php echo $id ?>"
 					onclick="return confirm('Voulez-vous vraiment supprimer ce frais?');">Valider</a></td>
 				<td><a
-					href="index.php?uc=gererFrais&action=supprimerFrais&idFrais=<?php echo $id ?>"
+					href="index.php?uc=comptable&action=refuserFrais&idFrais=<?php echo $id ?>&mois=<?php echo $moisA ?>&visiteur=<?php echo $_REQUEST['visiteur'] ?>"
 					onclick="return confirm('Voulez-vous vraiment supprimer ce frais?');">Refuser</a></td>
 				<td><a
 					href="index.php?uc=gererFrais&action=supprimerFrais&idFrais=<?php echo $id ?>"
