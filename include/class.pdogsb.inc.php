@@ -390,8 +390,8 @@ class PdoGsb {
 	 * @return un tableau associatif de cl� un mois -aaaamm- et de valeurs l'ann�e et le mois correspondant
 	 *        
 	 */
-	public function getLesMoisDisponibles($idVisiteur) {
-		$req = "select fichefrais.mois as mois from  fichefrais where fichefrais.idvisiteur ='$idVisiteur' 
+	public function getLesMoisDisponibles($idVisiteur, $moisActuel) {
+		$req = "select fichefrais.mois as mois from  fichefrais where fichefrais.idvisiteur ='$idVisiteur' and fichefrais.mois like '$moisActuel%'
 		order by fichefrais.mois desc ";
 		$res = PdoGsb::$monPdo->query ( $req );
 		$lesMois = array ();

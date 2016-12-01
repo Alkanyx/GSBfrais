@@ -10,9 +10,9 @@ $numMois =substr( $mois,4,2);
 $action = $_REQUEST['action'];
 switch($action){
 	case 'saisirFrais':{
-		if($pdo->estPremierFraisMois($idVisiteur,$mois)){
+			if($pdo->estPremierFraisMois($idVisiteur,$mois)){
 			$pdo->creeNouvellesLignesFrais($idVisiteur,$mois);
-		}
+			}			
 		break;
 	}
 	case 'validerMajFraisForfait':{
