@@ -125,7 +125,7 @@ class PdoGsb {
 		INNER JOIN fichefrais f ON lignefraishorsforfait.idVisiteur=f.idVisiteur 
 		INNER JOIN etat ON f.idEtat=etat.id
 		where lignefraishorsforfait.idvisiteur ='$idVisiteur' 
-		and f.mois = '$mois' ";
+		and lignefraishorsforfait.mois = '$mois' ";
 		$res = PdoGsb::$monPdo->query ( $req );
 		$lesLignes = $res->fetchAll ();
 		$nbLignes = count ( $lesLignes );
@@ -340,7 +340,8 @@ class PdoGsb {
 		$res = PdoGsb::$monPdo->query ( $req );
 		$ligne = $res->fetch ();
 		$montant =$montant+ $ligne ['somme'];
-		$req = "UPDATE fichefrais set fichefrais.montantvalide='$montant', fichefrais.idEtat='VA' WHERE fichefrais.idVisiteur='$idVisiteur' AND fichefrais.mois='$mois'";
+		$date=date('y-m-d');
+		$req = "UPDATE fichefrais set fichefrais.montantvalide='$montant', fichefrais.idEtat='VA', fichefrais.dateModif='$date' WHERE fichefrais.idVisiteur='$idVisiteur' AND fichefrais.mois='$mois'";
 		PdoGsb::$monPdo->exec ( $req );
 		return PdoGsb::$monPdo->exec ( $req );
 	}

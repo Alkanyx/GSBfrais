@@ -78,7 +78,7 @@ switch ($action) {
 					if (! $test) {
 						$erreur = 'Erreur lors de la reportation';
 					}
-					header('location:http://localhost/gsb/gsbfrais/index.php?uc=comptable&action=listeFraisComptable&visiteur='.$idVisiteur);
+					header('location:http://localhost/gsb/gsbfrais/index.php?uc=comptable&action=listeFraisComptable');
 					break;
 				}
 			

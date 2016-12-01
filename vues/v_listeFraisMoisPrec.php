@@ -22,6 +22,10 @@
 
 	<?php
 			if (! empty ( $lesFraisForfait )) {
+
+				echo '<a
+					href="index.php?uc=comptable&action=validerFicheFrais&mois='.$moisA.'&visiteur='.$_REQUEST["visiteur"].'"
+					onclick="return confirm("Voulez-vous vraiment valider cette fiche de frais?");">Valider cette fiche de frais ?</a> ';
 				?>
 	<table class="listeLegere">
 		<caption>Descriptif des éléments forfaitisés du mois de <?php echo $libelleMois ?></caption>
@@ -49,10 +53,7 @@
 	<?php
 				}
 			}
-			if (! empty ( $lesFraisForfait )) {
-				echo '<a
-					href="index.php?uc=comptable&action=validerFicheFrais&mois='.$moisA.'&visiteur='.$_REQUEST["visiteur"].'"
-					onclick="return confirm("Voulez-vous vraiment valider cette fiche de frais?");">Valider cette fiche de frais ?</a> ';
+			if (!empty ( $lesFraisHorsForfait )) {
 				?>
 	<table class="listeLegere">
 			<caption>Descriptif des éléments Hors Forfait du mois de <?php echo $libelleMois ?></caption>
@@ -60,26 +61,23 @@
 				<th class="date">Date</th>
 				<th class="libelle">Libellé</th>
 				<th class="montant">Montant</th>
-				<th class="action">Etat</th>
 				<th class="action">Refuser</th>
 				<th class="action">Reporter</th>
 			</tr>
           
     <?php
 				foreach ( $lesFraisHorsForfait as $unFraisHorsForfait ) {
-					if (substr ( $unFraisHorsForfait ['libelle'], 0, 9 ) != "REFUSE : " && substr ( $unFraisHorsForfait ['libelle'], 0, 9 ) != "VALIDE : ") {
+					if (substr ( $unFraisHorsForfait ['libelle'], 0, 9 ) != "REFUSE : ") {
 						$libelle = $unFraisHorsForfait ['libelle'];
 						$date = $unFraisHorsForfait ['date'];
 						$montant = $unFraisHorsForfait ['montant'];
 						$id = $unFraisHorsForfait ['id'];
-						$etat = $unFraisHorsForfait ['libelEtat'];
 						?>		
             <tr>
 
 				<td> <?php echo $date ?></td>
 				<td><?php echo $libelle ?></td>
 				<td><?php echo $montant ?></td>
-				<td><?php echo $etat ?></td>
 				<td><a
 					href="index.php?uc=comptable&action=refuserFrais&idFrais=<?php echo $id ?>&mois=<?php echo $moisA ?>&visiteur=<?php echo $_REQUEST['visiteur'] ?>"
 					onclick="return confirm('Voulez-vous vraiment refuser ce frais?');">Refuser</a></td>
