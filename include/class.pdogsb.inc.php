@@ -281,7 +281,7 @@ class PdoGsb {
 	 * @return un tableau associatif
 	 *        
 	 */
-	public function reporterFrais($idFrais,$idVisiteur) {
+	public function reporterFrais($idFrais, $idVisiteur) {
 		$req = "SELECT mois FROM ligneFraisHorsForfait WHERE ligneFraisHorsForfait.id='$idFrais'";
 		$res = PdoGsb::$monPdo->query ( $req );
 		$ligne = $res->fetch ();
@@ -302,14 +302,14 @@ class PdoGsb {
 		$req = "SELECT * FROM fichefrais WHERE idVisiteur='$idVisiteur' AND mois='$valeurValide'";
 		
 		$res = PdoGsb::$monPdo->query ( $req );
-		var_dump($res);
-		if(!$res->fetch()){
+		var_dump ( $res );
+		if (! $res->fetch ()) {
 			$req = "INSERT INTO fichefrais (idVisiteur,mois,idEtat) VALUES ('$idVisiteur','$valeurValide','CR')";
-			var_dump($req);
+			var_dump ( $req );
 			$res = PdoGsb::$monPdo->query ( $req );
 		}
 		$req = "UPDATE lignefraishorsforfait set lignefraishorsforfait.mois='$valeurValide' WHERE lignefraishorsforfait.id='$idFrais'";
-		var_dump($req);
+		var_dump ( $req );
 		PdoGsb::$monPdo->exec ( $req );
 		return PdoGsb::$monPdo->exec ( $req );
 	}
@@ -327,18 +327,20 @@ class PdoGsb {
 	 * @return un tableau associatif
 	 *        
 	 */
-	public function validerFrais($idVisiteur, $mois, $idFrais) {
-		$req = "SELECT libelle,montant,montantValide FROM ligneFraisHorsForfait 
-		INNER JOIN fichefrais ON lignefraishorsforfait.idVisiteur=fichefrais.idvisiteur
-		WHERE ligneFraisHorsForfait.id='$idFrais'";
+	public function validerFrais($idVisiteur, $mois) {
+		$req = "SELECT SUM(montant) AS somme FROM ligneFraisHorsForfait 
+		WHERE ligneFraisHorsForfait.idVisiteur='$idVisiteur' AND mois='$mois'";
 		$res = PdoGsb::$monPdo->query ( $req );
 		$ligne = $res->fetch ();
-		$montantValide = $ligne ['montantValide'] + $ligne ['montant'];
-		$libelle = 'VALIDE : ' . $ligne ['libelle'];
-		var_dump ( $libelle );
-		$req = "UPDATE ligneFraisHorsForfait set ligneFraisHorsForfait.libelle='$libelle' WHERE lignefraishorsforfait.id='$idFrais'";
-		PdoGsb::$monPdo->exec ( $req );
-		$req = "UPDATE fichefrais set fichefrais.montantvalide='$montantValide' WHERE fichefrais.idVisiteur='$idVisiteur' AND fichefrais.mois='$mois'";
+		$montant = $ligne ['somme'];
+		$req = "SELECT SUM(quantite*montant) AS somme 
+				FROM lignefraisforfait 
+				JOIN fraisforfait ON lignefraisforfait.idFraisForfait=fraisforfait.id 
+				WHERE idVisiteur='$idVisiteur' AND mois='$mois'";
+		$res = PdoGsb::$monPdo->query ( $req );
+		$ligne = $res->fetch ();
+		$montant =$montant+ $ligne ['somme'];
+		$req = "UPDATE fichefrais set fichefrais.montantvalide='$montant', fichefrais.idEtat='VA' WHERE fichefrais.idVisiteur='$idVisiteur' AND fichefrais.mois='$mois'";
 		PdoGsb::$monPdo->exec ( $req );
 		return PdoGsb::$monPdo->exec ( $req );
 	}

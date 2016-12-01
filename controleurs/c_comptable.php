@@ -70,14 +70,15 @@ switch ($action) {
 				break;
 			}
 			
-			case 'validerFrais' :
+			case 'validerFicheFrais' :
 				{
-					$idFrais = $_REQUEST ['idFrais'];
-					$test = $pdo->validerFrais ( $visiteur, $moisFrais, $idFrais );
+					$idVisiteur= $_REQUEST ['visiteur'];
+					$moisFrais = $_REQUEST ['mois'];
+					$test = $pdo->validerFrais ( $idVisiteur, $moisFrais);
 					if (! $test) {
 						$erreur = 'Erreur lors de la reportation';
 					}
-					header('location:http://localhost/gsb/gsbfrais/index.php?uc=comptable&action=listeFraisComptable&visiteur='.$visiteur);
+					header('location:http://localhost/gsb/gsbfrais/index.php?uc=comptable&action=listeFraisComptable&visiteur='.$idVisiteur);
 					break;
 				}
 			
