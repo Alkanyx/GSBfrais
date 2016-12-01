@@ -19,7 +19,7 @@
               <a href="index.php?uc=comptable&action=moisComptable" title="Consultation de mes fiches de frais">Consultation fiches de frais</a>
            </li>
  	   <li class="smenu">
-              <a href="index.php?uc=connexion&action=deconnexion" title="Se dÃ©connecter">DÃ©connexion</a>
+              <a href="index.php?uc=connexion&action=deconnexion" title="Se dÃ©connecter">Déconnexion</a>
            </li>
          </ul>
         

@@ -96,7 +96,7 @@ class PdoGsb {
 	 * @return l'id, le nom et le pr�nom sous la forme d'un tableau associatif
 	 */
 	public function getInfosComptable($login, $mdp) {
-		$res = PdoGsb::$monPdo->prepare ( "select id,login, comptable.mdp as id FROM comptable where login=:login and mdp=:mdp" );
+		$res = PdoGsb::$monPdo->prepare ( "select id,login, comptable.mdp as id,nom FROM comptable where login=:login and mdp=:mdp" );
 		$res->execute ( array (
 				'login' => $login,
 				'mdp' => $mdp 

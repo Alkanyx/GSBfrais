@@ -50,6 +50,9 @@
 				}
 			}
 			if (! empty ( $lesFraisForfait )) {
+				echo '<a
+					href="index.php?uc=comptable&action=validerFicheFrais&mois='.$moisA.'&visiteur='.$_REQUEST["visiteur"].'"
+					onclick="return confirm("Voulez-vous vraiment valider cette fiche de frais?");">Valider cette fiche de frais ?</a> ';
 				?>
 	<table class="listeLegere">
 			<caption>Descriptif des éléments Hors Forfait du mois de <?php echo $libelleMois ?></caption>
@@ -58,7 +61,6 @@
 				<th class="libelle">Libellé</th>
 				<th class="montant">Montant</th>
 				<th class="action">Etat</th>
-				<th class="action">Valider</th>
 				<th class="action">Refuser</th>
 				<th class="action">Reporter</th>
 			</tr>
@@ -78,9 +80,6 @@
 				<td><?php echo $libelle ?></td>
 				<td><?php echo $montant ?></td>
 				<td><?php echo $etat ?></td>
-				<td><a
-					href="index.php?uc=comptable&action=validerFrais&idFrais=<?php echo $id ?>&mois=<?php echo $moisA ?>&visiteur=<?php echo $_REQUEST['visiteur'] ?>"
-					onclick="return confirm('Voulez-vous vraiment valider ce frais?');">Valider</a></td>
 				<td><a
 					href="index.php?uc=comptable&action=refuserFrais&idFrais=<?php echo $id ?>&mois=<?php echo $moisA ?>&visiteur=<?php echo $_REQUEST['visiteur'] ?>"
 					onclick="return confirm('Voulez-vous vraiment refuser ce frais?');">Refuser</a></td>

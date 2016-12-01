@@ -232,7 +232,6 @@ INSERT INTO `visiteur` (`id`, `nom`, `prenom`, `login`, `mdp`, `adresse`, `cp`, 
 
 --
 -- Contraintes pour les tables exportées
---
 
 --
 -- Contraintes pour la table `fichefrais`
