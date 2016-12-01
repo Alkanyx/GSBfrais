@@ -326,8 +326,9 @@ class PdoGsb {
 	 *        
 	 */
 	public function validerFrais($idVisiteur, $mois) {
-		$req = "SELECT SUM(montant) AS somme FROM ligneFraisHorsForfait 
+		$req = "SELECT SUM(montant) AS somme, libelle FROM ligneFraisHorsForfait 
 		WHERE ligneFraisHorsForfait.idVisiteur='$idVisiteur' AND mois='$mois'";
+		var_dump($req);
 		$res = PdoGsb::$monPdo->query ( $req );
 		$ligne = $res->fetch ();
 		$montant = $ligne ['somme'];

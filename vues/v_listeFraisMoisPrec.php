@@ -21,12 +21,19 @@
 	</select>
 
 	<?php
-			if (! empty ( $lesFraisForfait )) {
-
-				echo '<a
-					href="index.php?uc=comptable&action=validerFicheFrais&mois='.$moisA.'&visiteur='.$_REQUEST["visiteur"].'"
-					onclick="return confirm("Voulez-vous vraiment valider cette fiche de frais?");">Valider cette fiche de frais ?</a> ';
+			if (! empty ( $lesFraisForfait ) || ! empty ( $lesFraisHorsForfait )) {
+				
 				?>
+				<a
+		href="index.php?uc=comptable&action=validerFicheFrais&mois=<?php echo $moisA?>&visiteur=<?php echo $_REQUEST["visiteur"]?>"
+		onclick="return confirm('Voulez-vous vraiment valider cette fiche defrais?');">Valider
+		cette fiche de frais ?</a>
+				<?php
+			}
+			if (! empty ( $lesFraisForfait )) {
+				
+				?>
+				
 	<table class="listeLegere">
 		<caption>Descriptif des éléments forfaitisés du mois de <?php echo $libelleMois ?></caption>
 		<tr>
@@ -53,7 +60,7 @@
 	<?php
 				}
 			}
-			if (!empty ( $lesFraisHorsForfait )) {
+			if (! empty ( $lesFraisHorsForfait )) {
 				?>
 	<table class="listeLegere">
 			<caption>Descriptif des éléments Hors Forfait du mois de <?php echo $libelleMois ?></caption>
@@ -86,8 +93,6 @@
 					onclick="return confirm('Voulez-vous vraiment repporter ce frais?');">Reporter</a></td>
 			</tr>
 	<?php
-						
-
 					}
 				}
 			}
