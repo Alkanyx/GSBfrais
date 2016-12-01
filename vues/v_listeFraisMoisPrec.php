@@ -52,7 +52,7 @@
 			if (! empty ( $lesFraisForfait )) {
 				?>
 	<table class="listeLegere">
-			<caption>Descriptif des éléments Forfait du mois de <?php echo $libelleMois ?></caption>
+			<caption>Descriptif des éléments Hors Forfait du mois de <?php echo $libelleMois ?></caption>
 			<tr>
 				<th class="date">Date</th>
 				<th class="libelle">Libellé</th>
@@ -65,7 +65,7 @@
           
     <?php
 				foreach ( $lesFraisHorsForfait as $unFraisHorsForfait ) {
-					if (substr ( $unFraisHorsForfait ['libelle'], 0, 9 ) != "REFUSE : ") {
+					if (substr ( $unFraisHorsForfait ['libelle'], 0, 9 ) != "REFUSE : " && substr ( $unFraisHorsForfait ['libelle'], 0, 9 ) != "VALIDE : ") {
 						$libelle = $unFraisHorsForfait ['libelle'];
 						$date = $unFraisHorsForfait ['date'];
 						$montant = $unFraisHorsForfait ['montant'];
@@ -85,8 +85,8 @@
 					href="index.php?uc=comptable&action=refuserFrais&idFrais=<?php echo $id ?>&mois=<?php echo $moisA ?>&visiteur=<?php echo $_REQUEST['visiteur'] ?>"
 					onclick="return confirm('Voulez-vous vraiment refuser ce frais?');">Refuser</a></td>
 				<td><a
-					href="index.php?uc=gererFrais&action=reporterFrais&idFrais=<?php echo $id ?>"
-					onclick="return confirm('Voulez-vous vraiment supprimer ce frais?');">Reporter</a></td>
+					href="index.php?uc=comptable&action=reporterFrais&idFrais=<?php echo $id ?>&visiteur=<?php echo $_REQUEST['visiteur'] ?>"
+					onclick="return confirm('Voulez-vous vraiment repporter ce frais?');">Reporter</a></td>
 			</tr>
 	<?php
 						

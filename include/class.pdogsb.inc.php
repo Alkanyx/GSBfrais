@@ -281,6 +281,52 @@ class PdoGsb {
 	 * @return un tableau associatif
 	 *        
 	 */
+	public function reporterFrais($idFrais,$idVisiteur) {
+		$req = "SELECT mois FROM ligneFraisHorsForfait WHERE ligneFraisHorsForfait.id='$idFrais'";
+		$res = PdoGsb::$monPdo->query ( $req );
+		$ligne = $res->fetch ();
+		$mois = substr ( $ligne ['mois'], 4 );
+		$annee = substr ( $ligne ['mois'], 0, 4 );
+		if ($mois == 12) {
+			$annee = $annee + 1;
+			$mois = '01';
+		} elseif ($mois < 9) {
+			$mois = '0' . ($mois + 1);
+		} else {
+			$mois ++;
+		}
+		$valeurValide = $annee . $mois;
+		var_dump ( $annee );
+		var_dump ( $mois );
+		var_dump ( $valeurValide );
+		$req = "SELECT * FROM fichefrais WHERE idVisiteur='$idVisiteur' AND mois='$valeurValide'";
+		
+		$res = PdoGsb::$monPdo->query ( $req );
+		var_dump($res);
+		if(!$res->fetch()){
+			$req = "INSERT INTO fichefrais (idVisiteur,mois,idEtat) VALUES ('$idVisiteur','$valeurValide','CR')";
+			var_dump($req);
+			$res = PdoGsb::$monPdo->query ( $req );
+		}
+		$req = "UPDATE lignefraishorsforfait set lignefraishorsforfait.mois='$valeurValide' WHERE lignefraishorsforfait.id='$idFrais'";
+		var_dump($req);
+		PdoGsb::$monPdo->exec ( $req );
+		return PdoGsb::$monPdo->exec ( $req );
+	}
+	
+	/**
+	 * Met à jour la table ligneFraisHorsForfait
+	 *
+	 * Met à jour la table ligneFraisForfait pour un visiteur et
+	 * un mois donné en enregistrant le nouveau libelle
+	 *
+	 * @param
+	 *        	$idVisiteur
+	 * @param $mois sous
+	 *        	la forme aaaamm
+	 * @return un tableau associatif
+	 *        
+	 */
 	public function validerFrais($idVisiteur, $mois, $idFrais) {
 		$req = "SELECT libelle,montant,montantValide FROM ligneFraisHorsForfait 
 		INNER JOIN fichefrais ON lignefraishorsforfait.idVisiteur=fichefrais.idvisiteur
