@@ -50,22 +50,24 @@
 				}
 			}
 			if (! empty ( $lesFraisForfait )) {
+				echo '<a
+					href="index.php?uc=comptable&action=validerFicheFrais&mois='.$moisA.'&visiteur='.$_REQUEST["visiteur"].'"
+					onclick="return confirm("Voulez-vous vraiment valider cette fiche de frais?");">Valider cette fiche de frais ?</a> ';
 				?>
 	<table class="listeLegere">
-			<caption>Descriptif des éléments Forfait du mois de <?php echo $libelleMois ?></caption>
+			<caption>Descriptif des éléments Hors Forfait du mois de <?php echo $libelleMois ?></caption>
 			<tr>
 				<th class="date">Date</th>
 				<th class="libelle">Libellé</th>
 				<th class="montant">Montant</th>
 				<th class="action">Etat</th>
-				<th class="action">Valider</th>
 				<th class="action">Refuser</th>
 				<th class="action">Reporter</th>
 			</tr>
           
     <?php
 				foreach ( $lesFraisHorsForfait as $unFraisHorsForfait ) {
-					if (substr ( $unFraisHorsForfait ['libelle'], 0, 9 ) != "REFUSE : ") {
+					if (substr ( $unFraisHorsForfait ['libelle'], 0, 9 ) != "REFUSE : " && substr ( $unFraisHorsForfait ['libelle'], 0, 9 ) != "VALIDE : ") {
 						$libelle = $unFraisHorsForfait ['libelle'];
 						$date = $unFraisHorsForfait ['date'];
 						$montant = $unFraisHorsForfait ['montant'];
@@ -79,14 +81,11 @@
 				<td><?php echo $montant ?></td>
 				<td><?php echo $etat ?></td>
 				<td><a
-					href="index.php?uc=comptable&action=validerFrais&idFrais=<?php echo $id ?>&mois=<?php echo $moisA ?>&visiteur=<?php echo $_REQUEST['visiteur'] ?>"
-					onclick="return confirm('Voulez-vous vraiment valider ce frais?');">Valider</a></td>
-				<td><a
 					href="index.php?uc=comptable&action=refuserFrais&idFrais=<?php echo $id ?>&mois=<?php echo $moisA ?>&visiteur=<?php echo $_REQUEST['visiteur'] ?>"
 					onclick="return confirm('Voulez-vous vraiment refuser ce frais?');">Refuser</a></td>
 				<td><a
-					href="index.php?uc=gererFrais&action=reporterFrais&idFrais=<?php echo $id ?>"
-					onclick="return confirm('Voulez-vous vraiment supprimer ce frais?');">Reporter</a></td>
+					href="index.php?uc=comptable&action=reporterFrais&idFrais=<?php echo $id ?>&visiteur=<?php echo $_REQUEST['visiteur'] ?>"
+					onclick="return confirm('Voulez-vous vraiment repporter ce frais?');">Reporter</a></td>
 			</tr>
 	<?php
 						

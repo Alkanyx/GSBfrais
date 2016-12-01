@@ -52,32 +52,34 @@ switch ($action) {
 			$visiteur = $_REQUEST ['visiteur'];
 			$test = $pdo->refuserFrais ( $visiteur, $moisFrais, $idFrais );
 			if (! $test) {
-				$erreur = 'Erreur lors de la refusation mdr';
+				$erreur = 'Erreur lors de la refusation';
 			}
-			$leVisiteur = $pdo->getInfosVisiteurComptable ( $_REQUEST ['visiteur'] );
-			$lesFraisHorsForfait = $pdo->getLesFraisHorsForfait ( $_REQUEST ['visiteur'], $moisA );
-			$lesFraisForfait = $pdo->getLesFraisForfait ( $_REQUEST ['visiteur'], $moisA );
-			$lesVisiteurs = $pdo->getListeFraisVisiteur ( $mois );
-			include ('vues/v_listeFraisMoisPrec.php');
+			header('location:http://localhost/gsb/gsbfrais/index.php?uc=comptable&action=listeFraisComptable&visiteur='.$visiteur);
 			break;
 		}
 		
-		case 'validerFrais' :
+		case 'reporterFrais' :
 			{
 				$idFrais = $_REQUEST ['idFrais'];
-				$moisFrais = $_REQUEST ['mois'];
-				$visiteur = $_REQUEST ['visiteur'];
-				$test = $pdo->validerFrais ( $visiteur, $moisFrais, $idFrais );
+				$idVisiteur=$_REQUEST['visiteur'];
+				$test = $pdo->reporterFrais ($idFrais,$idVisiteur);
 				if (! $test) {
-					$erreur = 'Erreur lors de la validation mdr';
+					$erreur = 'Erreur lors de la validation';
 				}
-				$leVisiteur = $pdo->getInfosVisiteurComptable ( $_REQUEST ['visiteur'] );
-				$lesFraisHorsForfait = $pdo->getLesFraisHorsForfait ( $_REQUEST ['visiteur'], $moisA );
-				$lesFraisForfait = $pdo->getLesFraisForfait ( $_REQUEST ['visiteur'], $moisA );
-				$lesVisiteurs = $pdo->getListeFraisVisiteur ( $mois );
-				include ('vues/v_listeFraisMoisPrec.php');
+				header('location:http://localhost/gsb/gsbfrais/index.php?uc=comptable&action=listeFraisComptable&visiteur='.$idVisiteur);
 				break;
 			}
+			
+			case 'validerFrais' :
+				{
+					$idFrais = $_REQUEST ['idFrais'];
+					$test = $pdo->validerFrais ( $visiteur, $moisFrais, $idFrais );
+					if (! $test) {
+						$erreur = 'Erreur lors de la reportation';
+					}
+					header('location:http://localhost/gsb/gsbfrais/index.php?uc=comptable&action=listeFraisComptable&visiteur='.$visiteur);
+					break;
+				}
 			
 	case 'listeFraisComptable' :
 		{
