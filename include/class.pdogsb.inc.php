@@ -167,8 +167,8 @@ class PdoGsb {
 	 * @return tous les champs des lignes de frais hors forfait sous la forme d'un tableau associatif
 	 *
 	 */
-	public function getFicheFrais() {
-		$req = "select * from fichefrais INNER JOIN visiteur ON idVisiteur=visiteur.id where idEtat='VA'";
+	public function getFicheFrais($mois) {
+		$req = "select * from fichefrais INNER JOIN visiteur ON idVisiteur=visiteur.id where mois='$mois' AND idEtat='VA'";
 		$res = PdoGsb::$monPdo->query ( $req );
 		$lesLignes = $res->fetchAll ();
 		return $lesLignes;
@@ -190,6 +190,24 @@ class PdoGsb {
 		$laLigne = $res->fetch ();
 		return $laLigne ['nb'];
 	}
+	
+	
+	/**
+	 * Retourne le nombre de justificatif d'un visiteur pour un mois donn�
+	 *
+	 * @param
+	 *        	$idVisiteur
+	 * @param $mois sous
+	 *        	la forme aaaamm
+	 * @return le nombre entier de justificatifs
+	 *
+	 */
+	public function miseEnPaiement($idVisiteur, $mois) {
+		$req = "UPDATE fichefrais SET idEtat='MP' where fichefrais.idvisiteur ='$idVisiteur' and fichefrais.mois = '$mois'";
+		$res = PdoGsb::$monPdo->query ( $req );
+		header('location:index.php');
+	}
+	
 	/**
 	 * Retourne sous forme d'un tableau associatif toutes les lignes de frais au forfait
 	 * concern�es par les deux arguments

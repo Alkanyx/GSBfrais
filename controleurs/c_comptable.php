@@ -95,8 +95,19 @@ switch ($action) {
 		}
 	case 'paiement' :
 		{
-			$lesFichesFrais = $pdo->getFicheFrais();
-			include('vues/v_paiement.php');
+			$lesFichesFrais = $pdo->getFicheFrais ( $moisA );
+			include ('vues/v_paiement.php');
+			break;
+		}
+	case 'misepaiement' :
+		{
+			for($n = 0; $n <= $_REQUEST ['i']; $n ++) {
+				$check='check'.$n;
+				if ($_REQUEST [$check]) {
+					$pdo->miseEnPaiement ( $_REQUEST [$n], $moisA );
+				}
+			}
+			echo $_REQUEST ['i'];
 			break;
 		}
 }
