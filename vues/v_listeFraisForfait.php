@@ -24,7 +24,7 @@
 				}
 			?>			
 				<p>
-				<?php echo "Total : ".$totalForfait ?>
+				<?php echo "Total : ".$totalForfait." €" ?>
 				</p>
 			
 			
