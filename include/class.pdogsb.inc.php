@@ -155,6 +155,26 @@ class PdoGsb {
 	}
 	
 	/**
+	 * Retourne sous forme d'un tableau associatif toutes les lignes de frais hors forfait
+	 *
+	 * La boucle foreach ne peut �tre utilisée ici car on procède
+	 * à une modification de la structure itérée - transformation du champ date-
+	 *
+	 * @param
+	 *        	$idVisiteur
+	 * @param $mois sous
+	 *        	la forme aaaamm
+	 * @return tous les champs des lignes de frais hors forfait sous la forme d'un tableau associatif
+	 *
+	 */
+	public function getFicheFrais() {
+		$req = "select * from fichefrais INNER JOIN visiteur ON idVisiteur=visiteur.id where idEtat='VA'";
+		$res = PdoGsb::$monPdo->query ( $req );
+		$lesLignes = $res->fetchAll ();
+		return $lesLignes;
+	}
+	
+	/**
 	 * Retourne le nombre de justificatif d'un visiteur pour un mois donn�
 	 *
 	 * @param
@@ -294,13 +314,8 @@ class PdoGsb {
 			$mois ++;
 		}
 		$valeurValide = $annee . $mois;
-		var_dump ( $annee );
-		var_dump ( $mois );
-		var_dump ( $valeurValide );
 		$req = "SELECT * FROM fichefrais WHERE idVisiteur='$idVisiteur' AND mois='$valeurValide'";
-		
 		$res = PdoGsb::$monPdo->query ( $req );
-		var_dump ( $res );
 		if (! $res->fetch ()) {
 			$req = "INSERT INTO fichefrais (idVisiteur,mois,idEtat) VALUES ('$idVisiteur','$valeurValide','CR')";
 			var_dump ( $req );
@@ -327,7 +342,7 @@ class PdoGsb {
 	 */
 	public function validerFrais($idVisiteur, $mois) {
 		$req = "SELECT SUM(montant) AS somme, libelle FROM ligneFraisHorsForfait 
-		WHERE ligneFraisHorsForfait.idVisiteur='$idVisiteur' AND mois='$mois'";
+		WHERE ligneFraisHorsForfait.idVisiteur='$idVisiteur' AND mois='$mois' AND SUBSTR(libelle,1,9) != 'REFUSE : '";
 		var_dump($req);
 		$res = PdoGsb::$monPdo->query ( $req );
 		$ligne = $res->fetch ();

@@ -54,34 +54,34 @@ switch ($action) {
 			if (! $test) {
 				$erreur = 'Erreur lors de la refusation';
 			}
-			header('location:index.php?uc=comptable&action=listeFraisComptable&visiteur='.$visiteur);
+			header ( 'location:index.php?uc=comptable&action=listeFraisComptable&visiteur=' . $visiteur );
 			break;
 		}
-		
-		case 'reporterFrais' :
-			{
-				$idFrais = $_REQUEST ['idFrais'];
-				$idVisiteur=$_REQUEST['visiteur'];
-				$test = $pdo->reporterFrais ($idFrais,$idVisiteur);
-				if (! $test) {
-					$erreur = 'Erreur lors de la validation';
-				}
-				header('location:index.php?uc=comptable&action=listeFraisComptable&visiteur='.$idVisiteur);
-				break;
+	
+	case 'reporterFrais' :
+		{
+			$idFrais = $_REQUEST ['idFrais'];
+			$idVisiteur = $_REQUEST ['visiteur'];
+			$test = $pdo->reporterFrais ( $idFrais, $idVisiteur );
+			if (! $test) {
+				$erreur = 'Erreur lors de la déportation';
 			}
-			
-			case 'validerFicheFrais' :
-				{
-					$idVisiteur= $_REQUEST ['visiteur'];
-					$moisFrais = $_REQUEST ['mois'];
-					$test = $pdo->validerFrais ( $idVisiteur, $moisFrais);
-					if (! $test) {
-						$erreur = 'Erreur lors de la reportation';
-					}
-					header('location:index.php?uc=comptable&action=listeFraisComptable');
-					break;
-				}
-			
+			header ( 'location:index.php?uc=comptable&action=listeFraisComptable&visiteur=' . $idVisiteur );
+			break;
+		}
+	
+	case 'validerFicheFrais' :
+		{
+			$idVisiteur = $_REQUEST ['visiteur'];
+			$moisFrais = $_REQUEST ['mois'];
+			$test = $pdo->validerFrais ( $idVisiteur, $moisFrais );
+			if (! $test) {
+				$erreur = 'Erreur lors de la reportation';
+			}
+			header ( 'location:index.php?uc=comptable&action=listeFraisComptable' );
+			break;
+		}
+	
 	case 'listeFraisComptable' :
 		{
 			if (isset ( $_REQUEST ['visiteur'] )) {
@@ -91,6 +91,12 @@ switch ($action) {
 			}
 			$lesVisiteurs = $pdo->getListeFraisVisiteur ( $mois );
 			include ('vues/v_listeFraisMoisPrec.php');
+			break;
+		}
+	case 'paiement' :
+		{
+			$lesFichesFrais = $pdo->getFicheFrais();
+			include('vues/v_paiement.php');
 			break;
 		}
 }
