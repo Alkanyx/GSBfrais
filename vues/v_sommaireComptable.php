@@ -13,10 +13,6 @@
 		<li class="smenu"><a
 			href="index.php?uc=comptable&action=listeFraisComptable"
 			title="Saisie fiche de frais ">FDF non validées</a></li>
-		<li class="smenu"><a
-			href="index.php?uc=comptable&action=moisComptable"
-			title="Consultation de mes fiches de frais">Consultation fiches de
-				frais</a></li>
 		<li class="smenu"><a href="index.php?uc=comptable&action=paiement"
 			title="Mise en paiement">Mise en paiement</a></li>
 		<li class="smenu"><a href="index.php?uc=comptable&action=remboursement""

@@ -102,18 +102,29 @@ switch ($action) {
 	case 'misepaiement' :
 		{
 			for($n = 0; $n <= $_REQUEST ['i']; $n ++) {
-				$check='check'.$n;
+				$check = 'check' . $n;
 				if ($_REQUEST [$check]) {
 					$pdo->miseEnPaiement ( $_REQUEST [$n], $moisA );
 				}
 			}
-			echo $_REQUEST ['i'];
+			header ( 'location:index.php?uc=comptable&action=paiement' );
 			break;
 		}
 	case 'remboursement' :
 		{
 			$lesFichesFrais = $pdo->getFicheFraisPaye ( $moisA );
 			include ('vues/v_remboursement.php');
+			break;
+		}
+	case 'rembourser' :
+		{
+			for($n = 0; $n <= $_REQUEST ['i']; $n ++) {
+				$check = 'check' . $n;
+				if ($_REQUEST [$check]) {
+					$pdo->validerRemboursement ( $_REQUEST [$n], $moisA );
+				}
+			}
+			header ( 'location:index.php?uc=comptable&action=paiement' );
 			break;
 		}
 }

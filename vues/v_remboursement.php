@@ -2,7 +2,7 @@
 	<div class="encadre">
 		<p>Fiches mise en paiement du mois de <?php echo $libelleMois?>:</p>
 		<form method='post'
-			action='index.php?uc=comptable&action=misepaiement'>
+			action='index.php?uc=comptable&action=rembourser'>
 <?php
 $i = 0;
 if (empty ( $lesFichesFrais )) {
@@ -14,7 +14,7 @@ if (empty ( $lesFichesFrais )) {
 					<th class="date">Visiteur</th>
 					<th class="montant">Montant validé</th>
 					<th class='mois'>Mois</th>
-					<th class='mois'>Mise en paiement</th>
+					<th class='mois'>Remboursée</th>
 				</tr>
 			<?php
 	foreach ( $lesFichesFrais as $uneFicheFrais ) {
