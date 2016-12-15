@@ -1,6 +1,6 @@
 <?php
 /** 
- * Classe d'acc�s aux donn�es. 
+ * Classe d'acc�s aux données. 
  
  * Utilise les services de la classe PDO
  * pour l'application GSB
