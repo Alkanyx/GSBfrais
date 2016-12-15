@@ -1,6 +1,6 @@
 <?php
 /** 
- * Classe d'acc�s aux donn�es. 
+ * Classe d'acc�s aux données. 
  
  * Utilise les services de la classe PDO
  * pour l'application GSB
@@ -93,7 +93,7 @@ class PdoGsb {
 	 *        	$login
 	 * @param
 	 *        	$mdp
-	 * @return l'id, le nom et le pr�nom sous la forme d'un tableau associatif
+	 * @return l'id, le nom et le prénom sous la forme d'un tableau associatif
 	 */
 	public function getInfosComptable($login, $mdp) {
 		$res = PdoGsb::$monPdo->prepare ( "select id,login, comptable.mdp as id,nom FROM comptable where login=:login and mdp=:mdp" );
@@ -107,9 +107,9 @@ class PdoGsb {
 	
 	/**
 	 * Retourne sous forme d'un tableau associatif toutes les lignes de frais hors forfait
-	 * concern�es par les deux arguments
+	 * concernées par les deux arguments
 	 *
-	 * La boucle foreach ne peut être utilis�e ici car on procède
+	 * La boucle foreach ne peut être utilisée ici car on procède
 	 * à une modification de la structure itérée - transformation du champ date-
 	 *
 	 * @param
@@ -222,9 +222,25 @@ class PdoGsb {
 	 *        
 	 */
 	public function miseEnPaiement($idVisiteur, $mois) {
-		$req = "UPDATE fichefrais SET idEtat='MP' where fichefrais.idvisiteur ='$idVisiteur' and fichefrais.mois = '$mois'";
+		$date=date('Y-m-d');
+		$req = "UPDATE fichefrais SET idEtat='MP', dateModif='$date' where fichefrais.idvisiteur ='$idVisiteur' and fichefrais.mois = '$mois'";
 		$res = PdoGsb::$monPdo->query ( $req );
-		header ( 'location:index.php' );
+	}
+
+	/**
+	 * Retourne le nombre de justificatif d'un visiteur pour un mois donn�
+	 *
+	 * @param
+	 *        	$idVisiteur
+	 * @param $mois sous
+	 *        	la forme aaaamm
+	 * @return le nombre entier de justificatifs
+	 *
+	 */
+	public function validerRemboursement($idVisiteur, $mois) {
+		$date=date('Y-m-d');
+		$req = "UPDATE fichefrais SET idEtat='RB', dateModif='$date' where fichefrais.idvisiteur ='$idVisiteur' and fichefrais.mois = '$mois'";
+		$res = PdoGsb::$monPdo->query ( $req );
 	}
 	
 	/**
