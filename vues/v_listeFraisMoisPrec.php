@@ -4,6 +4,7 @@
 		onChange="javascript:location.href = this.value;">
 		
 		<?php
+		$totalForfait=0;
 		if (! isset ( $_REQUEST ['visiteur'] )) {
 			echo '<option value=0> { Sélectionner un visiteur } </option>';
 		} else {
@@ -34,31 +35,47 @@
 				
 				?>
 				
-	<table class="listeLegere">
-		<caption>Descriptif des éléments forfaitisés du mois de <?php echo $libelleMois ?></caption>
-		<tr>
-			<th>Frais Forfaitaires</th>
-			<th>Qté</th>
-			<th>Montant unitaire</th>
-			<th>Total</th>
-		</tr>
+<form method="POST"  action="index.php?uc=comptable&action=majfraisforfait&visiteur=<?php echo $leVisiteur['id']?>">
+      <div class="corpsForm">
           
-    <?php
-				foreach ( $lesFraisForfait as $unFraisForfait ) {
-					$libelle = $unFraisForfait ['libelle'];
-					$qte = $unFraisForfait ['montant'];
-					$montant = $unFraisForfait ['quantite'];
-					$total = $qte * $montant;
-					?>		
-            <tr>
-			<td> <?php echo $libelle ?></td>
-			<td><?php echo $qte ?></td>
-			<td><?php echo $montant ?></td>
-			<td><?php echo $total ?></td>
-
-		</tr>
-	<?php
+          <fieldset>
+            <legend>Eléments forfaitisés
+            </legend>
+			<?php
+				foreach ($lesFraisForfait as $unFrais)
+				{
+					$idFrais = $unFrais['idfrais'];
+					$libelle = $unFrais['libelle'];
+					$quantite = $unFrais['quantite'];
+					$totalForfait=$totalForfait+$unFrais['quantite']*$unFrais['montant'];
+			?>
+					<p>
+						<label for="idFrais"><?php echo $libelle ?></label>
+						<input type="text" id="idFrais" name="lesFrais[<?php echo $idFrais?>]" size="10" maxlength="5" value="<?php echo $quantite?>" > <?php echo $quantite * $unFrais['montant']?>€
+					</p>
+					
+			
+			<?php
 				}
+			?>			
+				<p>
+				<?php echo "Total : ".$totalForfait." €" ?>
+				</p>
+			
+			
+			
+			
+           
+          </fieldset>
+      </div>
+      <div class="piedForm">
+      <p>
+        <input id="ok" type="submit" value="Valider" size="20" />
+        <input id="annuler" type="reset" value="Effacer" size="20" />
+      </p> 
+      </div>
+        
+      </form><?php 
 			}
 			if (! empty ( $lesFraisHorsForfait )) {
 				?>

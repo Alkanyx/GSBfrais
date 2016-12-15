@@ -1,6 +1,6 @@
 <?php
 /** 
- * Classe d'acc�s aux données. 
+ * Classe d'accès aux données. 
  
  * Utilise les services de la classe PDO
  * pour l'application GSB
@@ -222,11 +222,11 @@ class PdoGsb {
 	 *        
 	 */
 	public function miseEnPaiement($idVisiteur, $mois) {
-		$date=date('Y-m-d');
+		$date = date ( 'Y-m-d' );
 		$req = "UPDATE fichefrais SET idEtat='MP', dateModif='$date' where fichefrais.idvisiteur ='$idVisiteur' and fichefrais.mois = '$mois'";
 		$res = PdoGsb::$monPdo->query ( $req );
 	}
-
+	
 	/**
 	 * Retourne le nombre de justificatif d'un visiteur pour un mois donn�
 	 *
@@ -235,10 +235,10 @@ class PdoGsb {
 	 * @param $mois sous
 	 *        	la forme aaaamm
 	 * @return le nombre entier de justificatifs
-	 *
+	 *        
 	 */
 	public function validerRemboursement($idVisiteur, $mois) {
-		$date=date('Y-m-d');
+		$date = date ( 'Y-m-d' );
 		$req = "UPDATE fichefrais SET idEtat='RB', dateModif='$date' where fichefrais.idvisiteur ='$idVisiteur' and fichefrais.mois = '$mois'";
 		$res = PdoGsb::$monPdo->query ( $req );
 	}
@@ -251,7 +251,7 @@ class PdoGsb {
 	 *        	$idVisiteur
 	 * @param $mois sous
 	 *        	la forme aaaamm
-	 * @return l'id, le libelle et la quantit� sous la forme d'un tableau associatif
+	 * @return l'id, le libelle et la quantité sous la forme d'un tableau associatif
 	 *        
 	 */
 	public function getLesFraisForfait($idVisiteur, $mois) {
@@ -290,10 +290,10 @@ class PdoGsb {
 	}
 	
 	/**
-	 * Met � jour la table ligneFraisForfait
+	 * Met à jour la table ligneFraisForfait
 	 *
-	 * Met � jour la table ligneFraisForfait pour un visiteur et
-	 * un mois donn� en enregistrant les nouveaux montants
+	 * Met à jour la table ligneFraisForfait pour un visiteur et
+	 * un mois donné en enregistrant les nouveaux montants
 	 *
 	 * @param
 	 *        	$idVisiteur
@@ -367,17 +367,20 @@ class PdoGsb {
 			$mois ++;
 		}
 		$valeurValide = $annee . $mois;
-		var_dump ( $annee );
-		var_dump ( $mois );
-		var_dump ( $valeurValide );
 		$req = "SELECT * FROM fichefrais WHERE idVisiteur='$idVisiteur' AND mois='$valeurValide'";
 		
 		$res = PdoGsb::$monPdo->query ( $req );
-		var_dump ( $res );
 		if (! $res->fetch ()) {
 			$req = "INSERT INTO fichefrais (idVisiteur,mois,idEtat) VALUES ('$idVisiteur','$valeurValide','CR')";
-			var_dump ( $req );
 			$res = PdoGsb::$monPdo->query ( $req );
+			$lesIdFrais = $this->getLesIdFrais ();
+			foreach ( $lesIdFrais as $uneLigneIdFrais ) {
+				$unIdFrais = $uneLigneIdFrais ['idfrais'];
+				$req = "insert into lignefraisforfait(idvisiteur,mois,idFraisForfait,quantite) 
+			values('$idVisiteur','$valeurValide','$unIdFrais',0)";
+				var_dump($req);
+				$res = PdoGsb::$monPdo->query ( $req );
+			}
 		}
 		$req = "UPDATE lignefraishorsforfait set lignefraishorsforfait.mois='$valeurValide' WHERE lignefraishorsforfait.id='$idFrais'";
 		var_dump ( $req );

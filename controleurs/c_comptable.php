@@ -1,10 +1,6 @@
 
 <?php
-if ($_SESSION ['idVisiteur'] == 'comptable')
-	include ("vues/v_sommaireComptable.php");
-else
-	include ("vues/v_sommaire.php");
-$idVisiteur = $_SESSION ['idVisiteur'];
+include ("vues/v_sommaireComptable.php");
 $mois = getMois ( date ( "d/m/Y" ) );
 $numAnnee = substr ( $mois, 0, 4 );
 $numMois = substr ( $mois, 4, 2 );
@@ -13,38 +9,6 @@ $mois = '11';
 $libelleMois = getLibelleMoisActuel ( $mois );
 $moisA = date ( "Y" ) . $mois;
 switch ($action) {
-	case 'saisirFrais' :
-		{
-			if ($pdo->estPremierFraisMois ( $idVisiteur, $mois )) {
-				$pdo->creeNouvellesLignesFrais ( $idVisiteur, $mois );
-			}
-			break;
-		}
-	case 'validerMajFraisForfait' :
-		{
-			$lesFrais = $_REQUEST ['lesFrais'];
-			if (lesQteFraisValides ( $lesFrais )) {
-				$pdo->majFraisForfait ( $idVisiteur, $mois, $lesFrais );
-			} else {
-				ajouterErreur ( "Les valeurs des frais doivent être numériques" );
-				include ("vues/v_erreurs.php");
-			}
-			break;
-		}
-	case 'validerCreationFrais' :
-		{
-			$dateFrais = $_REQUEST ['dateFrais'];
-			$libelle = $_REQUEST ['libelle'];
-			$montant = $_REQUEST ['montant'];
-			$id = $pdo->getMaxIdHorsForfait () [0] + 1;
-			valideInfosFrais ( $dateFrais, $libelle, $montant );
-			if (nbErreurs () != 0) {
-				include ("vues/v_erreurs.php");
-			} else {
-				$pdo->creeNouveauFraisHorsForfait ( $id, $idVisiteur, $mois, $libelle, $dateFrais, $montant );
-			}
-			break;
-		}
 	case 'refuserFrais' :
 		{
 			$idFrais = $_REQUEST ['idFrais'];
@@ -52,7 +16,7 @@ switch ($action) {
 			$visiteur = $_REQUEST ['visiteur'];
 			$test = $pdo->refuserFrais ( $visiteur, $moisFrais, $idFrais );
 			if (! $test) {
-				$erreur = 'Erreur lors de la refusation';
+				$erreur = 'Erreur lors de refus';
 			}
 			header ( 'location:index.php?uc=comptable&action=listeFraisComptable&visiteur=' . $visiteur );
 			break;
@@ -64,7 +28,7 @@ switch ($action) {
 			$idVisiteur = $_REQUEST ['visiteur'];
 			$test = $pdo->reporterFrais ( $idFrais, $idVisiteur );
 			if (! $test) {
-				$erreur = 'Erreur lors de la déportation';
+				$erreur = 'Erreur lors du report';
 			}
 			header ( 'location:index.php?uc=comptable&action=listeFraisComptable&visiteur=' . $idVisiteur );
 			break;
@@ -125,6 +89,21 @@ switch ($action) {
 				}
 			}
 			header ( 'location:index.php?uc=comptable&action=paiement' );
+			break;
+		}
+	case 'majfraisforfait' :
+		{
+			
+			$lesFrais = $_REQUEST ['lesFrais'];
+			$idVisiteur = $_REQUEST ['visiteur'];
+			var_dump($mois);
+			if (lesQteFraisValides ( $lesFrais )) {
+				$pdo->majFraisForfait ( $idVisiteur, $moisA, $lesFrais );
+			} else {
+				ajouterErreur ( "Les valeurs des frais doivent être numériques" );
+				include ("vues/v_erreurs.php");
+			}
+			header('location:index.php?uc=comptable&action=listeFraisComptable&visiteur='.$idVisiteur);
 			break;
 		}
 }
