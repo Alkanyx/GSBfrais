@@ -67,16 +67,22 @@ switch ($action) {
 		{
 			for($n = 0; $n <= $_REQUEST ['i']; $n ++) {
 				$check = 'check' . $n;
+				
 				if ($_REQUEST [$check]) {
-					$lesFraisForfait= $pdo->getLesFraisForfait($idVisiteur,$mois);
+					$idVis='idVisiteur'.$n;
+					$mois='mois'.$n;
+					$montantValide = 'montantValide'.$n;
+					$nomVis='nomVis'.$n;
+					$pdo->miseEnPaiement($_REQUEST[$n],$_REQUEST[$mois]);
+					// Création du pdf personalisé pour chaque personne et mise à jour dans la BDD
 					$pdf = new PDF ( 'P', 'mm', 'A4' );
 					$pdf->AddPage ();
 					$pdf->SetFont ( 'Helvetica', '', 11 );
 					$pdf->SetTextColor ( 0 );
-					$pdf->Text ( 8, 38, 'Numero Client : ' . $_REQUEST ['nomVis'] );
-					$pdf->Text ( 8, 43, 'Montant valide : ' . $_REQUEST ['montantValide'] );
-					$pdf->Text ( 8, 48, 'Mois : ' . $_REQUEST ['mois'] );
-					$nomPdf = 'Remboursement_' . $_REQUEST ['nomVis'] . '_' . $_REQUEST ['mois'];
+					$pdf->Text ( 8, 38, 'Numero Client : ' . $_REQUEST [$idVis] );
+					$pdf->Text ( 8, 43, 'Montant valide : ' . $_REQUEST [$montantValide].' euros' );
+					$pdf->Text ( 8, 48, 'Mois : ' . $_REQUEST [$mois] );
+					$nomPdf = 'pdf/Remboursement_' . $_REQUEST [$nomVis] . '_'.$_REQUEST [$mois].'pdf';
 					// Titres des colonnes
 					$entete = array (
 							'Libelle',
@@ -84,36 +90,42 @@ switch ($action) {
 							'P.U.',
 							'Montant HT' 
 					);
-					
 					$pdf->SetDrawColor ( 183 ); // Couleur du fond
 					$pdf->SetFillColor ( 221 ); // Couleur des filets
 					$pdf->SetTextColor ( 0 ); // Couleur du texte
 					$pdf->SetY ( 58 );
 					$pdf->SetX ( 8 );
-					$pdf->Cell ( 128, 8, 'Designation', 1, 0, 'L', 1 );
-					$pdf->SetX ( 136 ); // 8 + 96
+					$pdf->Cell ( 86, 8, 'Designation', 1, 0, 'L', 1 );
+					$pdf->SetX ( 94 ); // 8 + 96
 					$pdf->Cell ( 10, 8, 'Qte', 1, 0, 'C', 1 );
-					$pdf->SetX ( 146 ); // 104 + 10
-					$pdf->Cell ( 24, 8, 'Prix Unitaire', 1, 0, 'C', 1 );
-					$pdf->SetX ( 170 ); // 104 + 10
-					$pdf->Cell ( 24, 8, 'Total', 1, 0, 'C', 1 );
+					$pdf->SetX ( 104 ); // 104 + 10
+					$pdf->Cell ( 48, 8, 'Prix Unitaire (euros)', 1, 0, 'C', 1 );
+					$pdf->SetX ( 152 ); // 104 + 10
+					$pdf->Cell ( 48, 8, 'Total (euros)', 1, 0, 'C', 1 );
 					$pdf->Ln (); // Retour à la ligne
-					foreach($lesFraisForfait as $unFraisForfait){
-						$pdf->SetY($position_detail);
-						$pdf->SetX(8);
-						$pdf->MultiCell(128,utf8_decode($unFraisForfait['idFraisForfait']),1,'L');
-						$pdf->SetY($position_detail);
-						$pdf->SetX(136);
-						$pdf->MultiCell(10,8,$unFraisForfait['quantite'],1,'C');
-						$pdf->SetY($position_detail);
-						$pdf->SetX(146);
-						$pdf->MultiCell(24,8,$unFraisForfait['quantite'],1,'R');
-						$pdf->SetX(170);
-						$pdf->MultiCell(24,8,$unFraisForfait['quantite'],1,'R');
+					$position_detail = 66;
+					$idVisiteur = $_REQUEST [$n];
+					$mois = $_REQUEST ['mois'];
+					$lesFraisForfait = $pdo->getLesFraisForfait ( $idVisiteur, $mois );
+
+					foreach ( $lesFraisForfait as $unFraisForfait ) {
+				 		$montant=$unFraisForfait ['quantite']*$unFraisForfait ['montant'];
+						$pdf->SetY ( $position_detail );
+						$pdf->SetX ( 8 );
+						$pdf->MultiCell ( 86, 8,utf8_decode($unFraisForfait['libelle']), 1, 'L' );
+						$pdf->SetY ( $position_detail );
+						$pdf->SetX ( 94 );
+						$pdf->MultiCell ( 10, 8, $unFraisForfait ['quantite'], 1, 'C' );
+						$pdf->SetY ( $position_detail );
+						$pdf->SetX ( 104 );
+						$pdf->MultiCell ( 48, 8,$unFraisForfait['montant'], 1, 'R' );
+						$pdf->SetY ( $position_detail );
+						$pdf->SetX ( 152 );
+						$pdf->MultiCell ( 48, 8,  $montant,1, 'R' );
 						$position_detail += 8;
 					}
-
-					$pdf->Output ( $nomPdf, 'I' );
+					
+					$pdf->Output ( $nomPdf, 'F' );
 				}
 			}
 			

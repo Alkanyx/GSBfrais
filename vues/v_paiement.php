@@ -24,10 +24,11 @@ if (empty ( $lesFichesFrais )) {
 			<input type='hidden'
 				value='<?php echo $uneFicheFrais['idVisiteur'];?>'
 				name='<?php echo $i?>'>
+			<input type='hidden' value='<?php echo $uneFicheFrais['idVisiteur'];?>' name='<?php echo 'idVisiteur'.$i?>'>
 			<input type='hidden' value='<?php echo $i?>' name='i'>
-			<input type='hidden' value='<?php echo $nomVis?>' name='nomVis'>
-			<input type='hidden' value='<?php echo $montantValide?>' name='montantValide'>
-			<input type='hidden' value='<?php echo $mois?>' name='mois'>
+			<input type='hidden' value='<?php echo $nomVis?>' name='<?php echo 'nomVis'.$i?>'>
+			<input type='hidden' value='<?php echo $montantValide?>' name='<?php echo 'montantValide'.$i?>'>
+			<input type='hidden' value='<?php echo $mois?>' name='<?php echo 'mois'.$i?>'>
 			<tr>
 				<td><?php echo $nomVis ?></td>
 				<td><?php echo $montantValide ?></td>
