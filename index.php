@@ -6,9 +6,9 @@ session_start();
 $pdo = PdoGsb::getPdoGsb();
 $estConnecte = estConnecte();
 var_dump($estConnecte);
-if(!isset($_REQUEST['uc']) || !$estConnecte){
+if(!isset($_REQUEST['uc']) && !$estConnecte){
      $_REQUEST['uc'] = 'connexion';
-}	 
+}
 $uc = $_REQUEST['uc'];
 switch($uc){
 	case 'connexion':{

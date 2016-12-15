@@ -1,6 +1,5 @@
-
-</h3>
-<div class="encadre">
+<div id="contenu">
+	<div class="encadre">
 	<p>Fiches validées non payées du mois de <?php echo $libelleMois?>:</p>
 	<form method='post' action='index.php?uc=comptable&action=misepaiement'>
 <?php
@@ -42,6 +41,7 @@ if (empty ( $lesFichesFrais )) {
 		</table>
 	</form>
 <?php }?>
+</div>
 </div>
 </div>
 

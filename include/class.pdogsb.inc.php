@@ -14,7 +14,7 @@
  * @version    1.0 
  * @link       http://www.php.net/manual/fr/book.pdo.php
  */
-class PdoGsb {  
+class PdoGsb {
 	private static $serveur = 'mysql:host=localhost';
 	private static $bdd = 'dbname=gsb_frais';
 	private static $user = 'root';
@@ -155,7 +155,6 @@ class PdoGsb {
 	}
 	
 	/**
-<<<<<<< HEAD
 	 * Retourne sous forme d'un tableau associatif toutes les lignes de frais hors forfait
 	 *
 	 * La boucle foreach ne peut �tre utilisée ici car on procède
@@ -166,7 +165,7 @@ class PdoGsb {
 	 * @param $mois sous
 	 *        	la forme aaaamm
 	 * @return tous les champs des lignes de frais hors forfait sous la forme d'un tableau associatif
-	 *
+	 *        
 	 */
 	public function getFicheFrais($mois) {
 		$req = "select * from fichefrais INNER JOIN visiteur ON idVisiteur=visiteur.id where mois='$mois' AND idEtat='VA'";
@@ -176,8 +175,26 @@ class PdoGsb {
 	}
 	
 	/**
-=======
->>>>>>> branch 'master' of https://github.com/Alkanyx/GSBfrais
+	 * Retourne sous forme d'un tableau associatif toutes les lignes de frais hors forfait
+	 *
+	 * La boucle foreach ne peut �tre utilisée ici car on procède
+	 * à une modification de la structure itérée - transformation du champ date-
+	 *
+	 * @param
+	 *        	$idVisiteur
+	 * @param $mois sous
+	 *        	la forme aaaamm
+	 * @return tous les champs des lignes de frais hors forfait sous la forme d'un tableau associatif
+	 *        
+	 */
+	public function getFicheFraisPaye($mois) {
+		$req = "select * from fichefrais INNER JOIN visiteur ON idVisiteur=visiteur.id where mois='$mois' AND idEtat='MP'";
+		$res = PdoGsb::$monPdo->query ( $req );
+		$lesLignes = $res->fetchAll ();
+		return $lesLignes;
+	}
+	
+	/**
 	 * Retourne le nombre de justificatif d'un visiteur pour un mois donn�
 	 *
 	 * @param
@@ -194,7 +211,6 @@ class PdoGsb {
 		return $laLigne ['nb'];
 	}
 	
-	
 	/**
 	 * Retourne le nombre de justificatif d'un visiteur pour un mois donn�
 	 *
@@ -203,12 +219,12 @@ class PdoGsb {
 	 * @param $mois sous
 	 *        	la forme aaaamm
 	 * @return le nombre entier de justificatifs
-	 *
+	 *        
 	 */
 	public function miseEnPaiement($idVisiteur, $mois) {
 		$req = "UPDATE fichefrais SET idEtat='MP' where fichefrais.idvisiteur ='$idVisiteur' and fichefrais.mois = '$mois'";
 		$res = PdoGsb::$monPdo->query ( $req );
-		header('location:index.php');
+		header ( 'location:index.php' );
 	}
 	
 	/**
@@ -368,7 +384,7 @@ class PdoGsb {
 	 */
 	public function validerFrais($idVisiteur, $mois) {
 		$req = "SELECT SUM(montant) AS somme FROM ligneFraisHorsForfait 
-		WHERE ligneFraisHorsForfait.idVisiteur='$idVisiteur' AND mois='$mois'";
+		WHERE ligneFraisHorsForfait.idVisiteur='$idVisiteur' AND mois='$mois' AND SUBSTR(libelle,1,9) !='REFUSE : '";
 		$res = PdoGsb::$monPdo->query ( $req );
 		$ligne = $res->fetch ();
 		$montant = $ligne ['somme'];
@@ -378,8 +394,8 @@ class PdoGsb {
 				WHERE idVisiteur='$idVisiteur' AND mois='$mois'";
 		$res = PdoGsb::$monPdo->query ( $req );
 		$ligne = $res->fetch ();
-		$montant =$montant+ $ligne ['somme'];
-		$date=date('y-m-d');
+		$montant = $montant + $ligne ['somme'];
+		$date = date ( 'y-m-d' );
 		$req = "UPDATE fichefrais set fichefrais.montantvalide='$montant', fichefrais.idEtat='VA', fichefrais.dateModif='$date' WHERE fichefrais.idVisiteur='$idVisiteur' AND fichefrais.mois='$mois'";
 		PdoGsb::$monPdo->exec ( $req );
 		return PdoGsb::$monPdo->exec ( $req );

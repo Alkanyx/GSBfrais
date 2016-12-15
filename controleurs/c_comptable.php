@@ -110,5 +110,11 @@ switch ($action) {
 			echo $_REQUEST ['i'];
 			break;
 		}
+	case 'remboursement' :
+		{
+			$lesFichesFrais = $pdo->getFicheFraisPaye ( $moisA );
+			include ('vues/v_remboursement.php');
+			break;
+		}
 }
 ?>

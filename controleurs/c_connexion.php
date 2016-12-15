@@ -33,7 +33,6 @@ switch ($action) {
 				$nom = $comptable ['login'];
 				$prenom = $comptable ['nom'];
 				connecter ( $id, $nom, $prenom );	
-
 				include ("vues/v_sommaireComptable.php");
 			}
 			break;
