@@ -33,6 +33,7 @@
                 <th>Total</th>
                 <th></th>
                 <th><?php echo $totalHForfait." €" ?></th>
+                <th></th>
              </tr> 
                                           
     </table>
