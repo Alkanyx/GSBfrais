@@ -1,4 +1,3 @@
-
 <!-- Division pour le sommaire -->
 <div id="menuGauche">
 	<ul id="menuList">
