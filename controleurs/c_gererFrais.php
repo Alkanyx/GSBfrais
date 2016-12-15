@@ -7,14 +7,14 @@ $idVisiteur = $_SESSION['idVisiteur'];
 $mois = getMois(date("d/m/Y"));
 $numAnnee =substr( $mois,0,4);
 $numMois =substr( $mois,4,2);
+$totalHForfait=0;
+$totalForfait=0;
 $action = $_REQUEST['action'];
 switch($action){
 	case 'saisirFrais':{
 			if($pdo->estPremierFraisMois($idVisiteur,$mois)){
 			$pdo->creeNouvellesLignesFrais($idVisiteur,$mois);
 			}
-			$totalHForfait=0;
-			$totalForfait=0;
 		break;
 	}
 	case 'validerMajFraisForfait':{
@@ -25,7 +25,7 @@ switch($action){
 		else{
 			ajouterErreur("Les valeurs des frais doivent être numériques");
 			include("vues/v_erreurs.php");
-		}
+		}		
 	  break;
 	}
 	case 'validerCreationFrais':{
