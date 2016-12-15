@@ -73,6 +73,7 @@ switch ($action) {
 			}
 			header ( 'location:index.php?uc=comptable&action=paiement' );
 			break;
+			
 		}
 	case 'remboursement' :
 		{
