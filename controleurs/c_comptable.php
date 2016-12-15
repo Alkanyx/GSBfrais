@@ -68,12 +68,57 @@ switch ($action) {
 			for($n = 0; $n <= $_REQUEST ['i']; $n ++) {
 				$check = 'check' . $n;
 				if ($_REQUEST [$check]) {
-					$pdo->miseEnPaiement ( $_REQUEST [$n], $moisA );
+					$lesFraisForfait= $pdo->getLesFraisForfait($idVisiteur,$mois);
+					$pdf = new PDF ( 'P', 'mm', 'A4' );
+					$pdf->AddPage ();
+					$pdf->SetFont ( 'Helvetica', '', 11 );
+					$pdf->SetTextColor ( 0 );
+					$pdf->Text ( 8, 38, 'Numero Client : ' . $_REQUEST ['nomVis'] );
+					$pdf->Text ( 8, 43, 'Montant valide : ' . $_REQUEST ['montantValide'] );
+					$pdf->Text ( 8, 48, 'Mois : ' . $_REQUEST ['mois'] );
+					$nomPdf = 'Remboursement_' . $_REQUEST ['nomVis'] . '_' . $_REQUEST ['mois'];
+					// Titres des colonnes
+					$entete = array (
+							'Libelle',
+							'Qte',
+							'P.U.',
+							'Montant HT' 
+					);
+					
+					$pdf->SetDrawColor ( 183 ); // Couleur du fond
+					$pdf->SetFillColor ( 221 ); // Couleur des filets
+					$pdf->SetTextColor ( 0 ); // Couleur du texte
+					$pdf->SetY ( 58 );
+					$pdf->SetX ( 8 );
+					$pdf->Cell ( 128, 8, 'Designation', 1, 0, 'L', 1 );
+					$pdf->SetX ( 136 ); // 8 + 96
+					$pdf->Cell ( 10, 8, 'Qte', 1, 0, 'C', 1 );
+					$pdf->SetX ( 146 ); // 104 + 10
+					$pdf->Cell ( 24, 8, 'Prix Unitaire', 1, 0, 'C', 1 );
+					$pdf->SetX ( 170 ); // 104 + 10
+					$pdf->Cell ( 24, 8, 'Total', 1, 0, 'C', 1 );
+					$pdf->Ln (); // Retour à la ligne
+					foreach($lesFraisForfait as $unFraisForfait){
+						$pdf->SetY($position_detail);
+						$pdf->SetX(8);
+						$pdf->MultiCell(128,utf8_decode($unFraisForfait['idFraisForfait']),1,'L');
+						$pdf->SetY($position_detail);
+						$pdf->SetX(136);
+						$pdf->MultiCell(10,8,$unFraisForfait['quantite'],1,'C');
+						$pdf->SetY($position_detail);
+						$pdf->SetX(146);
+						$pdf->MultiCell(24,8,$unFraisForfait['quantite'],1,'R');
+						$pdf->SetX(170);
+						$pdf->MultiCell(24,8,$unFraisForfait['quantite'],1,'R');
+						$position_detail += 8;
+					}
+
+					$pdf->Output ( $nomPdf, 'I' );
 				}
 			}
+			
 			header ( 'location:index.php?uc=comptable&action=paiement' );
 			break;
-			
 		}
 	case 'remboursement' :
 		{
@@ -97,14 +142,14 @@ switch ($action) {
 			
 			$lesFrais = $_REQUEST ['lesFrais'];
 			$idVisiteur = $_REQUEST ['visiteur'];
-			var_dump($mois);
+			var_dump ( $mois );
 			if (lesQteFraisValides ( $lesFrais )) {
 				$pdo->majFraisForfait ( $idVisiteur, $moisA, $lesFrais );
 			} else {
 				ajouterErreur ( "Les valeurs des frais doivent être numériques" );
 				include ("vues/v_erreurs.php");
 			}
-			header('location:index.php?uc=comptable&action=listeFraisComptable&visiteur='.$idVisiteur);
+			header ( 'location:index.php?uc=comptable&action=listeFraisComptable&visiteur=' . $idVisiteur );
 			break;
 		}
 }
