@@ -155,6 +155,7 @@ class PdoGsb {
 	}
 	
 	/**
+<<<<<<< HEAD
 	 * Retourne sous forme d'un tableau associatif toutes les lignes de frais hors forfait
 	 *
 	 * La boucle foreach ne peut �tre utilisée ici car on procède
@@ -175,6 +176,8 @@ class PdoGsb {
 	}
 	
 	/**
+=======
+>>>>>>> branch 'master' of https://github.com/Alkanyx/GSBfrais
 	 * Retourne le nombre de justificatif d'un visiteur pour un mois donn�
 	 *
 	 * @param
@@ -332,8 +335,13 @@ class PdoGsb {
 			$mois ++;
 		}
 		$valeurValide = $annee . $mois;
+		var_dump ( $annee );
+		var_dump ( $mois );
+		var_dump ( $valeurValide );
 		$req = "SELECT * FROM fichefrais WHERE idVisiteur='$idVisiteur' AND mois='$valeurValide'";
+		
 		$res = PdoGsb::$monPdo->query ( $req );
+		var_dump ( $res );
 		if (! $res->fetch ()) {
 			$req = "INSERT INTO fichefrais (idVisiteur,mois,idEtat) VALUES ('$idVisiteur','$valeurValide','CR')";
 			var_dump ( $req );
@@ -359,9 +367,8 @@ class PdoGsb {
 	 *        
 	 */
 	public function validerFrais($idVisiteur, $mois) {
-		$req = "SELECT SUM(montant) AS somme, libelle FROM ligneFraisHorsForfait 
-		WHERE ligneFraisHorsForfait.idVisiteur='$idVisiteur' AND mois='$mois' AND SUBSTR(libelle,1,9) != 'REFUSE : '";
-		var_dump($req);
+		$req = "SELECT SUM(montant) AS somme FROM ligneFraisHorsForfait 
+		WHERE ligneFraisHorsForfait.idVisiteur='$idVisiteur' AND mois='$mois'";
 		$res = PdoGsb::$monPdo->query ( $req );
 		$ligne = $res->fetch ();
 		$montant = $ligne ['somme'];

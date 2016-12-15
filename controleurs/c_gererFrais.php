@@ -13,7 +13,8 @@ switch($action){
 			if($pdo->estPremierFraisMois($idVisiteur,$mois)){
 			$pdo->creeNouvellesLignesFrais($idVisiteur,$mois);
 			}
-			$total=0.0;
+			$totalHForfait=0;
+			$totalForfait=0;
 		break;
 	}
 	case 'validerMajFraisForfait':{

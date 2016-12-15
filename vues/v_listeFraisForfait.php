@@ -13,6 +13,7 @@
 					$idFrais = $unFrais['idfrais'];
 					$libelle = $unFrais['libelle'];
 					$quantite = $unFrais['quantite'];
+					$totalForfait=$totalForfait+$unFrais['quantite']*$unFrais['montant'];
 			?>
 					<p>
 						<label for="idFrais"><?php echo $libelle ?></label>
@@ -21,7 +22,10 @@
 			
 			<?php
 				}
-			?>
+			?>			
+				<p>
+				<?php echo "Total : ".$totalForfait." €" ?>
+				</p>
 			
 			
 			

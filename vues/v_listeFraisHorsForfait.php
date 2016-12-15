@@ -16,7 +16,7 @@
 			$date = $unFraisHorsForfait['date'];
 			$montant=$unFraisHorsForfait['montant'];
 			$id = $unFraisHorsForfait['id'];
-			$total=$total+$unFraisHorsForfait['montant'];
+			$totalHForfait=$totalHForfait+$unFraisHorsForfait['montant'];
 	?>		
             <tr>
                 <td> <?php echo $date ?></td>
@@ -32,7 +32,7 @@
 			<tr>
                 <th>Total</th>
                 <th></th>
-                <th><?php echo $total." €" ?></th>
+                <th><?php echo $totalHForfait." €" ?></th>
              </tr> 
                                           
     </table>
