@@ -70,7 +70,7 @@ function getMoisActuel() {
 	$date = getdate ();
 	$mois = $date ['mon'];
 	if ($mois < 10) {
-		$mois = '0' + $mois;
+		$mois = '0'.$mois;
 	}
 	return $mois;
 }

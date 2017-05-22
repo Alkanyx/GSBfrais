@@ -1,13 +1,9 @@
 
 <?php
 include ("vues/v_sommaireComptable.php");
-$mois = getMois ( date ( "d/m/Y" ) );
-$numAnnee = substr ( $mois, 0, 4 );
-$numMois = substr ( $mois, 4, 2 );
 $mois = getMoisActuel();
 $libelleMois = getLibelleMoisActuel ( $mois );
 $moisA = date ( "Y" ) . $mois;
-var_dump($mois);
 if(!isset($action)){
 	$_REQUEST ['action']='listeFraisComptable';
 }
