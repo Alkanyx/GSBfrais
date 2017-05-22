@@ -4,10 +4,9 @@ include ("vues/v_sommaireComptable.php");
 $mois = getMoisActuel();
 $libelleMois = getLibelleMoisActuel ( $mois );
 $moisA = date ( "Y" ) . $mois;
-if(!isset($action)){
+if(!isset($_REQUEST ['action'])){
 	$_REQUEST ['action']='listeFraisComptable';
 }
-
 $action = $_REQUEST ['action'];
 switch ($action) {
 	case 'refuserFrais' :
@@ -41,7 +40,7 @@ switch ($action) {
 			$moisFrais = $_REQUEST ['mois'];
 			$test = $pdo->validerFrais ( $idVisiteur, $moisFrais );
 			if (! $test) {
-				$erreur = 'Erreur lors de la reportation';
+				$erreur = 'Erreur lors du report';
 			}
 			header ( 'location:index.php?uc=comptable&action=listeFraisComptable' );
 			break;
@@ -152,10 +151,10 @@ switch ($action) {
 		}
 	case 'majfraisforfait' :
 		{
-			
+			echo 'allo';
 			$lesFrais = $_REQUEST ['lesFrais'];
 			$idVisiteur = $_REQUEST ['visiteur'];
-			var_dump ( $mois );
+			var_dump($_REQUEST['lesFrais']);
 			if (lesQteFraisValides ( $lesFrais )) {
 				$pdo->majFraisForfait ( $idVisiteur, $moisA, $lesFrais );
 			} else {
