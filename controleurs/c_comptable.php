@@ -151,7 +151,6 @@ switch ($action) {
 		}
 	case 'majfraisforfait' :
 		{
-			echo 'allo';
 			$lesFrais = $_REQUEST ['lesFrais'];
 			$idVisiteur = $_REQUEST ['visiteur'];
 			var_dump($_REQUEST['lesFrais']);
