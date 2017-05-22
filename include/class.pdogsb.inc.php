@@ -532,8 +532,7 @@ class PdoGsb {
 	 *        
 	 */
 	public function getLesMoisDisponibles($idVisiteur, $moisActuel) {
-		$req = "select fichefrais.mois as mois from  fichefrais where fichefrais.idvisiteur ='$idVisiteur' and fichefrais.mois like '$moisActuel%'
-		order by fichefrais.mois desc ";
+		$req = "select fichefrais.mois as mois from  fichefrais where fichefrais.idvisiteur ='$idVisiteur' order by fichefrais.mois desc ";
 		$res = PdoGsb::$monPdo->query ( $req );
 		$lesMois = array ();
 		$laLigne = $res->fetch ();
