@@ -8,8 +8,6 @@ $idVisiteur = $_SESSION ['idVisiteur'];
 switch ($action) {
 	case 'selectionnerMois' :
 		{
-			$moisActuel = getMois(date("m/Y"));
-			echo $moisActuel;
 			$lesMois = $pdo->getLesMoisDisponibles ( $idVisiteur );
 			// Afin de sélectionner par défaut le dernier mois dans la zone de liste
 			// on demande toutes les clés, et on prend la première,
