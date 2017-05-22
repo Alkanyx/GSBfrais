@@ -1854,6 +1854,7 @@ protected function _putheader()
 	$this->_put('%PDF-'.$this->PDFVersion);
 }
 
+
 protected function _puttrailer()
 {
 	$this->_put('/Size '.($this->n+1));

@@ -1,3 +1,4 @@
+
 <?php
 if ($_SESSION ['idVisiteur'] == 'comptable')
 	include ("vues/v_sommaireComptable.php");
