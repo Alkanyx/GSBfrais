@@ -4,10 +4,15 @@ include ("vues/v_sommaireComptable.php");
 $mois = getMois ( date ( "d/m/Y" ) );
 $numAnnee = substr ( $mois, 0, 4 );
 $numMois = substr ( $mois, 4, 2 );
-$action = $_REQUEST ['action'];
-$mois = '11';
+$mois = getMoisActuel();
 $libelleMois = getLibelleMoisActuel ( $mois );
 $moisA = date ( "Y" ) . $mois;
+var_dump($mois);
+if(!isset($action)){
+	$_REQUEST ['action']='listeFraisComptable';
+}
+
+$action = $_REQUEST ['action'];
 switch ($action) {
 	case 'refuserFrais' :
 		{
@@ -162,6 +167,13 @@ switch ($action) {
 				include ("vues/v_erreurs.php");
 			}
 			header ( 'location:index.php?uc=comptable&action=listeFraisComptable&visiteur=' . $idVisiteur );
+			break;
+		}
+	case 'cloturer' :
+		{
+			$dateCL=date('Y').'-'.$mois.'10';
+			$pdo->cloturerFDF($dateCL);
+			header ( 'location:index.php?uc=comptable&action=listeFraisComptable');
 			break;
 		}
 }

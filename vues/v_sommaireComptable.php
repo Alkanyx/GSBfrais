@@ -11,10 +11,11 @@
 			title="Mise en paiement">Mise en paiement</a></li>
 		<li class="smenu"><a
 			href="index.php?uc=comptable&action=remboursement"
-			"
 			title="Suivi remboursement">Suivi remboursement</a></li>
+		<?php  /*><li class="smenu"><a href="index.php?uc=comptable&action=paiement"
+			title="Mise en paiement" onclick="return confirm('Voulez-vous vraiment cloturer les fiches de frais du mois précédent ??');">Cloture des FDF</a></li>*/?>
 		<li class="smenu"><a href="index.php?uc=connexion&action=deconnexion"
-			title="Se déconnecter">Déconnexion</a></li>
+			title="Se déconnecter" >Déconnexion</a></li>
 	</ul>
 </div>
 

@@ -16,8 +16,8 @@
 					$totalForfait=$totalForfait+$unFrais['quantite']*$unFrais['montant'];
 			?>
 					<p>
-						<label for="idFrais"><?php echo $libelle ?></label>
-						<input type="text" id="idFrais" name="lesFrais[<?php echo $idFrais?>]" size="10" maxlength="5" value="<?php echo $quantite?>" >
+						<label for="idFrais"><?php echo $libelle ?></label> 
+						<input type="text" id="idFrais" name="lesFrais[<?php echo $idFrais?>]" size="10" maxlength="5" value="<?php echo $quantite?>" > <?php echo $quantite * $unFrais['montant']?>€
 					</p>
 					
 			

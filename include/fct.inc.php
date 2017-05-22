@@ -76,7 +76,7 @@ function getMoisActuel() {
 }
 
 /**
- * Recup�re le libelle mois de la date du syst�me
+ * Recupère le libelle du mois entré au paramètre
  *
  * @return la mois au format mm
  */

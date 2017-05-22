@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Client :  127.0.0.1
--- Généré le :  Jeu 01 Décembre 2016 à 09:03
+-- Généré le :  Ven 16 Décembre 2016 à 10:02
 -- Version du serveur :  5.7.9
 -- Version de PHP :  5.6.15
 
@@ -31,6 +31,7 @@ CREATE TABLE IF NOT EXISTS `comptable` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `login` text NOT NULL,
   `mdp` text NOT NULL,
+  `nom` varchar(11) NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
 
@@ -38,8 +39,8 @@ CREATE TABLE IF NOT EXISTS `comptable` (
 -- Contenu de la table `comptable`
 --
 
-INSERT INTO `comptable` (`id`, `login`, `mdp`) VALUES
-(1, 'azckler', 'Benjamin!');
+INSERT INTO `comptable` (`id`, `login`, `mdp`, `nom`) VALUES
+(1, 'Comptable', 'c6113002e20e24dd8abca95227af93f2', 'Sebastien');
 
 -- --------------------------------------------------------
 
@@ -49,10 +50,10 @@ INSERT INTO `comptable` (`id`, `login`, `mdp`) VALUES
 
 DROP TABLE IF EXISTS `etat`;
 CREATE TABLE IF NOT EXISTS `etat` (
-  `id` char(2) NOT NULL,
-  `libelle` varchar(30) DEFAULT NULL,
+  `id` char(2) COLLATE utf8_bin NOT NULL,
+  `libelle` varchar(30) COLLATE utf8_bin DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
 --
 -- Contenu de la table `etat`
@@ -73,24 +74,29 @@ INSERT INTO `etat` (`id`, `libelle`) VALUES
 
 DROP TABLE IF EXISTS `fichefrais`;
 CREATE TABLE IF NOT EXISTS `fichefrais` (
-  `idVisiteur` char(4) NOT NULL,
-  `mois` char(6) NOT NULL,
+  `idVisiteur` char(4) COLLATE utf8_bin NOT NULL,
+  `mois` char(6) COLLATE utf8_bin NOT NULL,
   `nbJustificatifs` int(11) DEFAULT NULL,
   `montantValide` decimal(10,2) DEFAULT NULL,
   `dateModif` date DEFAULT NULL,
-  `idEtat` char(2) DEFAULT 'CR',
+  `idEtat` char(2) COLLATE utf8_bin DEFAULT 'CR',
   PRIMARY KEY (`idVisiteur`,`mois`),
   KEY `idEtat` (`idEtat`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
 --
 -- Contenu de la table `fichefrais`
 --
 
 INSERT INTO `fichefrais` (`idVisiteur`, `mois`, `nbJustificatifs`, `montantValide`, `dateModif`, `idEtat`) VALUES
-('a131', '201611', 0, '150000.00', '2016-11-10', 'CL'),
-('a93', '201611', 0, '560000.00', '2016-11-10', 'CL'),
-('b16', '201611', 0, '0.00', '2016-11-24', 'CR');
+('a131', '201611', 0, '0.00', '2016-11-01', 'CL'),
+('a131', '201612', 0, '0.00', '2016-11-01', 'CR'),
+('b28', '201612', 0, '0.00', '2016-12-15', 'CR'),
+('c14', '201612', 0, '0.00', '2016-12-15', 'CR'),
+('c3', '201611', 0, '0.00', '2016-12-01', 'CL'),
+('c3', '201612', 0, '0.00', '2017-01-01', 'CR'),
+('e24', '201611', 0, '0.00', '2016-11-01', 'CL'),
+('e52', '201611', 0, '0.00', '2016-11-01', 'CL');
 
 -- --------------------------------------------------------
 
@@ -100,11 +106,11 @@ INSERT INTO `fichefrais` (`idVisiteur`, `mois`, `nbJustificatifs`, `montantValid
 
 DROP TABLE IF EXISTS `fraisforfait`;
 CREATE TABLE IF NOT EXISTS `fraisforfait` (
-  `id` char(3) NOT NULL,
-  `libelle` char(20) DEFAULT NULL,
+  `id` char(3) COLLATE utf8_bin NOT NULL,
+  `libelle` char(20) COLLATE utf8_bin DEFAULT NULL,
   `montant` decimal(5,2) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
 --
 -- Contenu de la table `fraisforfait`
@@ -124,31 +130,51 @@ INSERT INTO `fraisforfait` (`id`, `libelle`, `montant`) VALUES
 
 DROP TABLE IF EXISTS `lignefraisforfait`;
 CREATE TABLE IF NOT EXISTS `lignefraisforfait` (
-  `idVisiteur` char(4) NOT NULL,
-  `mois` char(6) NOT NULL,
-  `idFraisForfait` char(3) NOT NULL,
+  `idVisiteur` char(4) COLLATE utf8_bin NOT NULL,
+  `mois` char(6) COLLATE utf8_bin NOT NULL,
+  `idFraisForfait` char(3) COLLATE utf8_bin NOT NULL,
   `quantite` int(11) DEFAULT NULL,
   PRIMARY KEY (`idVisiteur`,`mois`,`idFraisForfait`),
   KEY `idFraisForfait` (`idFraisForfait`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
 --
 -- Contenu de la table `lignefraisforfait`
 --
 
 INSERT INTO `lignefraisforfait` (`idVisiteur`, `mois`, `idFraisForfait`, `quantite`) VALUES
-('a131', '201611', 'ETP', 0),
-('a131', '201611', 'KM', 0),
-('a131', '201611', 'NUI', 0),
+('a131', '201611', 'ETP', 3),
+('a131', '201611', 'KM', 68),
+('a131', '201611', 'NUI', 1),
 ('a131', '201611', 'REP', 0),
-('a93', '201611', 'ETP', 0),
-('a93', '201611', 'KM', 0),
-('a93', '201611', 'NUI', 0),
-('a93', '201611', 'REP', 0),
-('b16', '201611', 'ETP', 5),
-('b16', '201611', 'KM', 5),
-('b16', '201611', 'NUI', 5),
-('b16', '201611', 'REP', 5);
+('a131', '201612', 'ETP', 1),
+('a131', '201612', 'KM', 0),
+('a131', '201612', 'NUI', 5),
+('a131', '201612', 'REP', 0),
+('b28', '201612', 'ETP', 0),
+('b28', '201612', 'KM', 30),
+('b28', '201612', 'NUI', 1),
+('b28', '201612', 'REP', 3),
+('c14', '201612', 'ETP', 1),
+('c14', '201612', 'KM', 57),
+('c14', '201612', 'NUI', 0),
+('c14', '201612', 'REP', 2),
+('c3', '201611', 'ETP', 12),
+('c3', '201611', 'KM', 5),
+('c3', '201611', 'NUI', 2),
+('c3', '201611', 'REP', 4),
+('c3', '201612', 'ETP', 51),
+('c3', '201612', 'KM', 4),
+('c3', '201612', 'NUI', 6),
+('c3', '201612', 'REP', 5),
+('e24', '201611', 'ETP', 1),
+('e24', '201611', 'KM', 35),
+('e24', '201611', 'NUI', 1),
+('e24', '201611', 'REP', 1),
+('e52', '201611', 'ETP', 0),
+('e52', '201611', 'KM', 90),
+('e52', '201611', 'NUI', 1),
+('e52', '201611', 'REP', 0);
 
 -- --------------------------------------------------------
 
@@ -159,23 +185,37 @@ INSERT INTO `lignefraisforfait` (`idVisiteur`, `mois`, `idFraisForfait`, `quanti
 DROP TABLE IF EXISTS `lignefraishorsforfait`;
 CREATE TABLE IF NOT EXISTS `lignefraishorsforfait` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `idVisiteur` char(4) NOT NULL,
-  `mois` char(6) NOT NULL,
-  `libelle` varchar(100) DEFAULT NULL,
+  `idVisiteur` char(4) COLLATE utf8_bin NOT NULL,
+  `mois` char(6) COLLATE utf8_bin NOT NULL,
+  `libelle` varchar(100) COLLATE utf8_bin DEFAULT NULL,
   `date` date DEFAULT NULL,
   `montant` decimal(10,2) DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `idVisiteur` (`idVisiteur`,`mois`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=18 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
 --
 -- Contenu de la table `lignefraishorsforfait`
 --
 
 INSERT INTO `lignefraishorsforfait` (`id`, `idVisiteur`, `mois`, `libelle`, `date`, `montant`) VALUES
-(1, 'a93', '201611', 'SALUT A TOUS', '2016-08-07', '560000.00'),
-(2, 'a131', '201611', 'VALIDE : rezgzergz', '2016-11-24', '30000.00'),
-(3, 'b16', '201611', 'HELLO WORLD', '2016-11-07', '75180.00');
+(1, 'c3', '201611', 'piscine', '2016-02-11', '52.00'),
+(2, 'c3', '201611', 'trampoline', '2016-11-10', '20.00'),
+(3, 'c3', '201611', 'limousine', '2016-11-20', '200.10'),
+(4, 'c3', '201611', 'spectacle', '2016-05-11', '30.00'),
+(5, 'a131', '201612', 'piscine', '2016-11-10', '200.10'),
+(6, 'a131', '201612', 'truc', '2015-12-11', '1.00'),
+(7, 'b28', '201612', 'Piscine', '2016-11-10', '15.00'),
+(8, 'b28', '201612', 'Karting', '2016-05-15', '30.00'),
+(9, 'c14', '201612', 'Champagne', '2016-11-20', '31.50'),
+(10, 'a131', '201611', 'Souris', '2015-12-18', '52.00'),
+(11, 'a131', '201611', 'Sac', '2016-08-20', '20.00'),
+(12, 'a131', '201612', 'Sac', '2016-08-20', '20.00'),
+(13, 'e24', '201611', 'Dentifrice', '2016-04-12', '5.00'),
+(14, 'e24', '201611', 'Glace', '2016-07-15', '4.00'),
+(15, 'e24', '201611', 'Chemise', '2016-10-05', '29.99'),
+(16, 'e52', '201611', 'Imprimante', '2016-02-17', '149.99'),
+(17, 'e52', '201611', 'Horloge', '2016-05-04', '25.50');
 
 -- --------------------------------------------------------
 
@@ -185,17 +225,17 @@ INSERT INTO `lignefraishorsforfait` (`id`, `idVisiteur`, `mois`, `libelle`, `dat
 
 DROP TABLE IF EXISTS `visiteur`;
 CREATE TABLE IF NOT EXISTS `visiteur` (
-  `id` char(4) NOT NULL,
-  `nom` char(30) DEFAULT NULL,
-  `prenom` char(30) DEFAULT NULL,
-  `login` char(20) DEFAULT NULL,
-  `mdp` char(33) CHARACTER SET utf8 COLLATE utf8_bin DEFAULT NULL,
-  `adresse` char(30) DEFAULT NULL,
-  `cp` char(5) DEFAULT NULL,
-  `ville` char(30) DEFAULT NULL,
+  `id` char(4) COLLATE utf8_bin NOT NULL,
+  `nom` char(30) COLLATE utf8_bin DEFAULT NULL,
+  `prenom` char(30) COLLATE utf8_bin DEFAULT NULL,
+  `login` char(20) COLLATE utf8_bin DEFAULT NULL,
+  `mdp` char(33) COLLATE utf8_bin DEFAULT NULL,
+  `adresse` char(30) COLLATE utf8_bin DEFAULT NULL,
+  `cp` char(5) COLLATE utf8_bin DEFAULT NULL,
+  `ville` char(30) COLLATE utf8_bin DEFAULT NULL,
   `dateEmbauche` date DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
 --
 -- Contenu de la table `visiteur`
@@ -232,6 +272,7 @@ INSERT INTO `visiteur` (`id`, `nom`, `prenom`, `login`, `mdp`, `adresse`, `cp`, 
 
 --
 -- Contraintes pour les tables exportées
+--
 
 --
 -- Contraintes pour la table `fichefrais`
@@ -252,6 +293,17 @@ ALTER TABLE `lignefraisforfait`
 --
 ALTER TABLE `lignefraishorsforfait`
   ADD CONSTRAINT `lignefraishorsforfait_ibfk_1` FOREIGN KEY (`idVisiteur`,`mois`) REFERENCES `fichefrais` (`idVisiteur`, `mois`);
+
+DELIMITER $$
+--
+-- Événements
+--
+DROP EVENT `CLOTURE`$$
+CREATE DEFINER=`root`@`localhost` EVENT `CLOTURE` ON SCHEDULE EVERY 1 MONTH STARTS '2017-01-10 01:00:00' ON COMPLETION NOT PRESERVE ENABLE DO UPDATE fichefrais
+SET idEtat='CL'
+WHERE SUBSTR(mois,1,4)=SUBSTR(CURDATE(),1,4) AND SUBSTR(mois,5,2)=(SUBSTR(CURDATE(),6,2)-1) AND idEtat!="VA"$$
+
+DELIMITER ;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
